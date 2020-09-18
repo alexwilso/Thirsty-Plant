@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.thirstyplant.activities.AddPlant">
+
+    <EditText
+        android:id="@+id/plantInstructions"
+        android:layout_width="372dp"
+        android:layout_height="149dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="10dp"
+        android:background="#4F0B5D1E"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/instructions"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:text="@string/none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="209dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/when_did_you_acquire_the_plant"
+        android:textColor="#0B5D1E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plantLocation" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="239dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/any_special_care_instructions"
+        android:textColor="#0B5D1E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plantDate" />
+
+    <EditText
+        android:id="@+id/plantLocation"
+        android:layout_width="372dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="10dp"
+        android:background="#4F0B5D1E"
+        android:ems="10"
+        android:hint="@string/location"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.368"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/plantKind"
+        android:layout_width="372dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="10dp"
+        android:background="#4F0B5D1E"
+        android:ems="10"
+        android:hint="@string/plant_name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="207dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/what_is_the_name_of_the_plant"
+        android:textColor="#0B5D1E"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plantKind" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gochi_hand"
+        android:text="@string/add_a_plant"
+        android:textColor="#683E3E"
+        android:textSize="46sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="162dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/what_is_kind_of_plant_is_it"
+        android:textColor="#0B5D1E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <EditText
+        android:id="@+id/plantNickName"
+        android:layout_width="372dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="10dp"
+        android:autofillHints=""
+        android:background="#4F0B5D1E"
+        android:ems="10"
+        android:hint="@string/nickname"
+        android:inputType="textPersonName"
+        android:text="@string/none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="179dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/where_is_the_plant_located"
+        android:textColor="#0B5D1E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plantNickName" />
+
+    <EditText
+        android:id="@+id/plantDate"
+        android:layout_width="372dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="10dp"
+        android:background="#4F0B5D1E"
+        android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="@string/date"
+        android:importantForAutofill="no"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <Button
+        android:id="@+id/CreatePlant"
+        android:layout_width="127dp"
+        android:layout_height="58dp"
+        android:background="#9A0D0D"
+        android:text="@string/create_plant"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plantInstructions"
+        app:layout_constraintVertical_bias="0.288" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
