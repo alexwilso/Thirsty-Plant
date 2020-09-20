@@ -11,16 +11,18 @@ public class Plant {
     private String location;
     private String dateAcquired;
     private String careInstructions;
+    private String photoSource;
     private boolean watered;
     private boolean fertilized;
 
-    public Plant(int id, String plantName, String nickName, String location, String dateAcquired, String careInstructions, boolean watered, boolean fertilized) {
+    public Plant(int id, String plantName, String nickName, String location, String dateAcquired, String careInstructions, String photoSource, boolean watered, boolean fertilized) {
         this.id = id;
         this.plantName = plantName;
         this.nickName = nickName;
         this.location = location;
         this.dateAcquired = dateAcquired;
         this.careInstructions = careInstructions;
+        this.photoSource = photoSource;
         this.watered = watered;
         this.fertilized = fertilized;
     }
@@ -34,6 +36,7 @@ public class Plant {
                 ", location='" + location + '\'' +
                 ", dateAcquired='" + dateAcquired + '\'' +
                 ", careInstructions='" + careInstructions + '\'' +
+                ", photoSource='" + photoSource + '\'' +
                 ", watered=" + watered +
                 ", fertilized=" + fertilized +
                 '}';
@@ -85,6 +88,14 @@ public class Plant {
 
     public void setCareInstructions(String careInstructions) {
         this.careInstructions = careInstructions;
+    }
+
+    public String getPhotoSource() {
+        return photoSource;
+    }
+
+    public void setPhotoSource(String photoSource) {
+        this.photoSource = photoSource;
     }
 
     public String getDateAcquired() {

@@ -4,96 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.thirstyplant.activities.WaterFertilize">
+    tools:context="com.example.thirstyplant.activities.WaterSchedule">
+
+    <Button
+        android:id="@+id/setSchedule"
+        android:layout_width="144dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="68dp"
+        android:background="#3F51B5"
+        android:text="@string/set_schedule"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxYes" />
 
     <EditText
-        android:id="@+id/dateTextFertlize"
-        android:layout_width="372dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="1dp"
-        android:autofillHints=""
-        android:background="#6B9A0D0D"
-        android:ems="10"
-        android:focusable="auto"
-        android:focusableInTouchMode="false"
-        android:hint="@string/date"
-        android:inputType="date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="372dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/what_time_do_you_fertilize_this_plant"
-        android:textColor="#9A0D0D"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTextFertlize" />
-
-    <EditText
-        android:id="@+id/editTextTime3"
-        android:layout_width="372dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="1dp"
-        android:background="#6B9A0D0D"
-        android:ems="10"
-        android:hint="@string/every_days"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22"
-        android:autofillHints="" />
-
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="372dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/when_will_you_fertilize_this_plant_again"
-        android:textColor="#9A0D0D"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-    <EditText
-        android:id="@+id/timeTextFertlize"
-        android:layout_width="372dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="1dp"
-        android:autofillHints=""
-        android:background="#6B9A0D0D"
-        android:editable="false"
-        android:ems="10"
-        android:focusable="auto"
-        android:focusableInTouchMode="false"
-        android:hint="@string/time"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="372dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/how_often_do_you_fertlize_this_plant"
-        android:textColor="#9A0D0D"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeTextFertlize " />
-
-    <EditText
-        android:id="@+id/editTextTime2"
+        android:id="@+id/waterSchedule"
         android:layout_width="372dp"
         android:layout_height="43dp"
         android:layout_marginTop="1dp"
@@ -111,7 +40,7 @@
         android:id="@+id/textView19"
         android:layout_width="372dp"
         android:layout_height="18dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="50dp"
         android:text="@string/how_often_do_you_water_this_plant"
         android:textColor="#3F51B5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +56,7 @@
         android:background="#6B3F51B5"
         android:clickable="true"
         android:ems="10"
-        android:focusable="false"
+        android:focusable="true"
         android:focusableInTouchMode="false"
         android:hint="@string/time"
         android:importantForAutofill="no"
@@ -141,29 +70,13 @@
         android:id="@+id/textView18"
         android:layout_width="372dp"
         android:layout_height="18dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="50dp"
         android:text="@string/what_time_do_you_water_this_plant"
         android:textColor="#3F51B5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateTextWater" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/gochi_hand"
-        android:text="@string/fertilization_schedule"
-        android:textColor="#9A0D0D"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTime2"
-        app:layout_constraintVertical_bias="0.049" />
 
     <TextView
         android:id="@+id/textView9"
@@ -184,7 +97,7 @@
         android:id="@+id/textView17"
         android:layout_width="372dp"
         android:layout_height="18dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="50dp"
         android:text="@string/when_will_you_water_this_plant_again"
         android:textColor="#3F51B5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -199,7 +112,6 @@
         android:layout_marginTop="1dp"
         android:autofillHints=""
         android:background="#6B3F51B5"
-        android:editable="false"
         android:ems="10"
         android:focusable="false"
         android:focusableInTouchMode="false"
@@ -209,5 +121,29 @@
         app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="200dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/will_you_be_fertilizing_this_plant"
+        android:textColor="#3F51B5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/waterSchedule" />
+
+    <CheckBox
+        android:id="@+id/checkBoxYes"
+        android:layout_width="118dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="8dp"
+        android:background="#6B3F51B5"
+        android:checked="false"
+        android:text="@string/yes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

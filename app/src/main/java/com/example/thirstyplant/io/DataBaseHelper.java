@@ -16,18 +16,19 @@ import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-    public static final String PLANT_TABLE = "PLANT_TABLE";
+    public static final String PLANT_TABLE = "MY_PLANTS";
     public static final String COLUMN_PLANT_NAME = "PLANT_NAME";
     public static final String COLUMN_PLANT_NICKNAME = "PLANT_NICKNAME";
     public static final String COLUMN_PLANT_LOCATION = "PLANT_LOCATION";
     public static final String COLUMN_DATE_ACQUIRED = "DATE_ACQUIRED";
     public static final String COLUMN_CARE_INSTRUCTIONS = "CARE_INSTRUCTIONS";
+    public static  final String COLUMN_PHOTO_PATH = "PHOTO_PATH";
     public static final String COLUMN_WATERED = "WATERED";
     public static final String COLUMN_FERTILIZED = "FERTILIZED";
     public static final String COLUMN_ID = "ID";
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "plants", null, 1);
+        super(context, "MyPlants", null, 2);
     }
 
     /**
@@ -38,7 +39,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String createTable = "CREATE TABLE " + PLANT_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PLANT_NAME + " TEXT, " + COLUMN_PLANT_NICKNAME + " TEXT, " + COLUMN_PLANT_LOCATION
                 + " TEXT, " + COLUMN_DATE_ACQUIRED + " TEXT, " + COLUMN_CARE_INSTRUCTIONS + " TEXT, "
-                + COLUMN_WATERED + " BOOL, " + COLUMN_FERTILIZED + " BOOL)";
+                + COLUMN_PHOTO_PATH + " TEXT, " + COLUMN_WATERED + " BOOL, " + COLUMN_FERTILIZED + " BOOL)";
         db.execSQL(createTable);
     }
 
@@ -61,6 +62,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_PLANT_LOCATION, plant.getLocation());
         cv.put(COLUMN_DATE_ACQUIRED, plant.getDateAcquired());
         cv.put(COLUMN_CARE_INSTRUCTIONS, plant.getCareInstructions());
+        cv.put(COLUMN_PHOTO_PATH, plant.getPhotoSource());
         cv.put(COLUMN_WATERED, plant.isWatered());
         cv.put(COLUMN_FERTILIZED, plant.isFertilized());
         long insert = database.insert(PLANT_TABLE, null, cv);
@@ -90,9 +92,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String plantLocation = cursor.getString(3);
                 String plantDate = cursor.getString(4);
                 String plantCare = cursor.getString(5);
-                boolean plantWatered = cursor.getInt(6) == 1 ? true: false;
-                boolean plantFertilized = cursor.getInt(7) == 1 ? true: false;
-                Plant plant = new Plant(plantId, plantName, plantNickName, plantLocation, plantDate, plantCare, plantWatered, plantFertilized);
+                String photoPath = cursor.getString(6);
+                boolean plantWatered = cursor.getInt(7) == 1 ? true: false;
+                boolean plantFertilized = cursor.getInt(8) == 1 ? true: false;
+                Plant plant = new Plant(plantId, plantName, plantNickName, plantLocation, plantDate, plantCare, photoPath, plantWatered, plantFertilized);
                 returnList.add(plant);
             } while (cursor.moveToNext());
         }

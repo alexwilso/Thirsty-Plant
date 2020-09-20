@@ -2,16 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/takePhoto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.thirstyplant.activities.AddPlant">
 
+
     <EditText
         android:id="@+id/plantInstructions"
-        android:layout_width="372dp"
-        android:layout_height="149dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="10dp"
+        android:layout_width="186dp"
+        android:layout_height="200dp"
         android:background="#4F0B5D1E"
         android:ems="10"
         android:gravity="start|top"
@@ -21,7 +21,7 @@
         android:text="@string/none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13"
         app:layout_constraintVertical_bias="0.0" />
@@ -30,7 +30,7 @@
         android:id="@+id/textView15"
         android:layout_width="209dp"
         android:layout_height="18dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="23dp"
         android:text="@string/when_did_you_acquire_the_plant"
         android:textColor="#0B5D1E"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,13 +40,13 @@
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="239dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="199dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="23dp"
         android:text="@string/any_special_care_instructions"
         android:textColor="#0B5D1E"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plantDate" />
 
@@ -56,6 +56,7 @@
         android:layout_height="43dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="10dp"
+        android:autofillHints=""
         android:background="#4F0B5D1E"
         android:ems="10"
         android:hint="@string/location"
@@ -63,8 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.368"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <EditText
         android:id="@+id/plantKind"
@@ -75,18 +75,18 @@
         android:background="#4F0B5D1E"
         android:ems="10"
         android:hint="@string/plant_name"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="207dp"
         android:layout_height="18dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="23dp"
         android:text="@string/what_is_the_name_of_the_plant"
         android:textColor="#0B5D1E"
         android:textSize="14sp"
@@ -114,7 +114,7 @@
         android:id="@+id/textView8"
         android:layout_width="162dp"
         android:layout_height="18dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="23dp"
         android:text="@string/what_is_kind_of_plant_is_it"
         android:textColor="#0B5D1E"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,7 +143,7 @@
         android:id="@+id/textView12"
         android:layout_width="179dp"
         android:layout_height="18dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="23dp"
         android:text="@string/where_is_the_plant_located"
         android:textColor="#0B5D1E"
         app:layout_constraintEnd_toEndOf="parent"
@@ -170,16 +170,44 @@
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <Button
-        android:id="@+id/CreatePlant"
-        android:layout_width="127dp"
-        android:layout_height="58dp"
+        android:id="@+id/createPlant"
+        android:layout_width="99dp"
+        android:layout_height="56dp"
         android:background="#9A0D0D"
         android:text="@string/create_plant"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/plantKind"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.285" />
+
+    <Button
+        android:id="@+id/addPhoto"
+        android:layout_width="142dp"
+        android:layout_height="35dp"
+        android:text="@string/add_photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.895"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plantInstructions"
-        app:layout_constraintVertical_bias="0.288" />
+        app:layout_constraintTop_toBottomOf="@+id/plantPhoto"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/plantPhoto"
+        android:layout_width="186dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="23dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.642"
+        app:layout_constraintStart_toEndOf="@+id/plantInstructions"
+        app:layout_constraintTop_toBottomOf="@+id/plantDate"
+        app:layout_constraintVertical_bias="0.207"
+        app:srcCompat="@drawable/plant" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
