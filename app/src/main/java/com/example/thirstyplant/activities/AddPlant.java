@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.thirstyplant.R;
 import com.example.thirstyplant.model.Plant;
-import com.example.thirstyplant.io.DataBaseHelper;
+import com.example.thirstyplant.io.PlantDatabaseHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -89,8 +89,8 @@ public class AddPlant extends AppCompatActivity {
                         "Error", "Error", "Error", false, false);
                 Toast.makeText(AddPlant.this, "Error creating plant", Toast.LENGTH_LONG).show();
             }
-            DataBaseHelper dataBaseHelper = new DataBaseHelper(AddPlant.this);
-            boolean success = dataBaseHelper.addPlant(plant);
+            PlantDatabaseHelper PLantDataBaseHelper = new PlantDatabaseHelper(AddPlant.this);
+            boolean success = PLantDataBaseHelper.addPlant(plant);
             if (success) {
                 Toast.makeText(AddPlant.this, "True", Toast.LENGTH_LONG).show();
                 waterFertilize();
@@ -158,7 +158,7 @@ public class AddPlant extends AppCompatActivity {
         try {
             fileOutputStream = new FileOutputStream(myPath);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
-            plantPath = "/data/data/com.example.thirstyplant.controller/app_plantPhotos/" + pathName + ".jpg";
+            plantPath = getString(R.string.plantPath) + pathName + ".jpg";
 
         } catch (Exception e) {
             e.printStackTrace();

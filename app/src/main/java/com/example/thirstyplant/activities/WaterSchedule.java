@@ -16,8 +16,9 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import com.example.thirstyplant.R;
-
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class WaterSchedule extends AppCompatActivity {
     private EditText waterDate, waterTime, waterSchedule;
@@ -61,12 +62,12 @@ public class WaterSchedule extends AppCompatActivity {
                 toNext();
             }
         });
-
-    }
-
 /**
  * Uses datepickerdialog to set desired date. Sets date in editText
  */
+    }
+
+
     private void setDate(final EditText editText){
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -75,7 +76,7 @@ public class WaterSchedule extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                String date = month + "/" + dayOfMonth + "/" + year;
+                String date = year + "-" + (month<10?("0"+month):(month)) + "-" + (dayOfMonth<10?("0"+dayOfMonth):(dayOfMonth));
                 editText.setText(date);
             }
         }, year, month, day);

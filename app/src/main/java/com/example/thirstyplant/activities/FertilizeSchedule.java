@@ -69,7 +69,7 @@ public class FertilizeSchedule extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                String date = month + "/" + dayOfMonth + "/" + year;
+                String date = year + "-" + (month<10?("0"+month):(month)) + "-" + (dayOfMonth<10?("0"+dayOfMonth):(dayOfMonth));
                 editText.setText(date);
             }
         }, year, month, day);

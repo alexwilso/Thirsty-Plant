@@ -10,11 +10,12 @@ import androidx.annotation.Nullable;
 
 import com.example.thirstyplant.model.Plant;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
-public class DataBaseHelper extends SQLiteOpenHelper {
+public class PlantDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String PLANT_TABLE = "MY_PLANTS";
     public static final String COLUMN_PLANT_NAME = "PLANT_NAME";
@@ -27,7 +28,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_FERTILIZED = "FERTILIZED";
     public static final String COLUMN_ID = "ID";
 
-    public DataBaseHelper(@Nullable Context context) {
+    public PlantDatabaseHelper(@Nullable Context context) {
         super(context, "MyPlants", null, 2);
     }
 
@@ -36,11 +37,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + PLANT_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        String plantTable = "CREATE TABLE " + PLANT_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PLANT_NAME + " TEXT, " + COLUMN_PLANT_NICKNAME + " TEXT, " + COLUMN_PLANT_LOCATION
                 + " TEXT, " + COLUMN_DATE_ACQUIRED + " TEXT, " + COLUMN_CARE_INSTRUCTIONS + " TEXT, "
                 + COLUMN_PHOTO_PATH + " TEXT, " + COLUMN_WATERED + " BOOL, " + COLUMN_FERTILIZED + " BOOL)";
-        db.execSQL(createTable);
+        db.execSQL(plantTable);
     }
 
     /**
@@ -107,6 +108,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
 
     }
+
+//    public List<Plant> DisplayPlants(){
+//        List<Plant> returnList = new ArrayList<>();
+//
+//        String queryString = "SELECT * FROM " + PLANT_TABLE;
+//        SQLiteDatabase database = this.getReadableDatabase();
+//        Cursor cursor = database.rawQuery(queryString, null);
+//        if (cursor.moveToFirst()){
+//            do {
+//                String Array = []
+//
+//            } while (cursor.moveToNext());
+//        }
+//    }
 
     /**
      * Deletes plants in database
