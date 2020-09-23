@@ -15,12 +15,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.thirstyplant.R;
-import com.example.thirstyplant.model.Plant;
-import com.example.thirstyplant.io.DatabaseHelper;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -70,39 +68,28 @@ public class AddPlant extends AppCompatActivity {
         addPlantButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addPlant();
+                try {
+                    addPlantData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
 
     /**
-     * Adds Plant to database
+     * Adds plant info to JsonObject
      */
-    private void addPlant() {
-        Plant plant;
+    private void addPlantData() throws JSONException {
         if (!missingData()) {
-            try {
-                createPlant.put("Name", plantName.getText().toString());
-                createPlant.put("NickName", plantNickName.getText().toString());
-                createPlant.put("Location", plantLocation.getText().toString());
-                createPlant.put("Date", plantDate.getText().toString());
-                createPlant.put("Instruction", plantInstructions.getText().toString());
-                createPlant.put("Path", plantPath);
-                plant = new Plant(-1, plantName.getText().toString(), plantNickName.getText().toString(),
-                        plantLocation.getText().toString(), plantDate.getText().toString(),
-                        plantInstructions.getText().toString(), plantPath,false,
-                        false);
-            } catch (Exception e) {
-                plant = new Plant(-1, "Error", "Error", "Error",
-                        "Error", "Error", "Error", false, false);
-                Toast.makeText(AddPlant.this, "Error creating plant", Toast.LENGTH_LONG).show();
-            }
-            DatabaseHelper databaseHelper = new DatabaseHelper(AddPlant.this);
-            boolean success = databaseHelper.addPlant(plant);
-            if (success) {
-                waterFertilize();
-            }
+            createPlant.put("Name", plantName.getText().toString());
+            createPlant.put("NickName", plantNickName.getText().toString());
+            createPlant.put("Location", plantLocation.getText().toString());
+            createPlant.put("Date", plantDate.getText().toString());
+            createPlant.put("Instruction", plantInstructions.getText().toString());
+            createPlant.put("Path", plantPath);
+            waterFertilize();
         }
     }
 

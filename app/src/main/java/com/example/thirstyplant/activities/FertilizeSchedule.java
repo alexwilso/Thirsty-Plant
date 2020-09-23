@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.thirstyplant.R;
 import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.FertilizeTimer;
+import com.example.thirstyplant.model.Plant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -120,7 +121,7 @@ public class FertilizeSchedule extends AppCompatActivity {
     /**
      * Throws error if text boxes left empty
      */
-    private boolean missingDate(){
+    private boolean missingData(){
         if (fertilizeDate.getText().toString().isEmpty()){
             fertilizeDate.setError("Please enter a date");
             fertilizeDate.requestFocus();
@@ -173,7 +174,7 @@ public class FertilizeSchedule extends AppCompatActivity {
         createPlant.put("nextFertilizeTime", fertilizeTime.getText().toString());
         createPlant.put("fertilizeFrequency", fertilizeFrequency.getText().toString());
         FertilizeTimer fertilizeTimer;
-        if (!missingDate()){
+        if (!missingData()){
             try {
                 fertilizeTimer = new FertilizeTimer(-1, fertilizeDate.getText().toString(), fertilizeTime.getText().toString(),
                         Integer.parseInt(fertilizeFrequency.getText().toString()));
@@ -191,6 +192,34 @@ public class FertilizeSchedule extends AppCompatActivity {
     }
 
     /**
+     * Adds Plant to table
+     */
+    private void addPlant(JSONObject myPlant) {
+        Plant plant;
+        if (!missingData()) {
+            try {
+                plant = new Plant(-1, myPlant.getString("Name"), myPlant.getString("NickName"),
+                        myPlant.getString("Location"), myPlant.getString("Date"),
+                        myPlant.getString("Instruction"), myPlant.getString("Path"),
+                        myPlant.getString("nextWaterDate"), myPlant.getString("nextWaterTimer"),
+                        myPlant.getString("waterFrequency"), myPlant.getString("nextFertilizeDate"),
+                        myPlant.getString("nextFertilizeTime"), myPlant.getString("fertilizeFrequency"),
+                        false, false);
+            } catch (Exception e) {
+                plant = new Plant(-1, "Error", "Error", "Error",
+                        "Error", "Error", "Error", "Eror",
+                        "Error", "Error", "Error", "Error",
+                        "Error", false, false);
+                Toast.makeText(FertilizeSchedule.this, "Error creating plant", Toast.LENGTH_LONG).show();
+            }
+            DatabaseHelper databaseHelper = new DatabaseHelper(FertilizeSchedule.this);
+            boolean success = databaseHelper.addPlant(plant);
+            if (success) {
+            }
+        }
+    }
+
+    /**
      * Prevents user from going back to add water timer screen
      */
 
@@ -203,7 +232,7 @@ public class FertilizeSchedule extends AppCompatActivity {
      * Takes user to home screen
      */
     private void toNext(){
-        System.out.println(createPlant);
+        addPlant(createPlant);
         Intent toHome = new Intent(FertilizeSchedule.this, Home.class);
         startActivity(toHome);
     }

@@ -12,9 +12,7 @@ import com.example.thirstyplant.model.FertilizeTimer;
 import com.example.thirstyplant.model.Plant;
 import com.example.thirstyplant.model.WaterTimer;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -32,11 +30,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String WATER_TABLE = "WATER_TIMERS";
     public static final String DATE_OF_NEXT_WATER = "DATE_OF_NEXT_WATER";
     public static final String TIME_OF_NEXT_WATER = "TIME_OF_NEXT_WATER";
-    public static final String WATER_FREQUENCY = "HOW_OFTEN";
+    public static final String WATER_FREQUENCY = "HOW_OFTEN_WATER";
     public static final String FERTILIZE_TABLE = "FERTILIZE_TIMERS";
-    public static final String FERTILIZE_DATE = "DATE_OF_NEXT_FERTILIZE";
+    public static final String DATE_OF_NEXT_FERTILIZE = "DATE_OF_NEXT_FERTILIZE";
     public static final String TIME_OF_NEXT_FERTILIZE = "TIME_OF_NEXT_FERTILIZE";
-    public static final String FERTILIZE_FREQUENCY = "HOW_OFTEN";
+    public static final String FERTILIZE_FREQUENCY = "HOW_OFTEN_FERTILIZE";
 
 
 
@@ -52,7 +50,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String plantTable = "CREATE TABLE " + PLANT_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PLANT_NAME + " TEXT, " + COLUMN_PLANT_NICKNAME + " TEXT, " + COLUMN_PLANT_LOCATION
                 + " TEXT, " + COLUMN_DATE_ACQUIRED + " TEXT, " + COLUMN_CARE_INSTRUCTIONS + " TEXT, "
-                + COLUMN_PHOTO_PATH + " TEXT, " + COLUMN_WATERED + " BOOL, " + COLUMN_FERTILIZED + " BOOL)";
+                + COLUMN_PHOTO_PATH + " TEXT, " + DATE_OF_NEXT_WATER + " TEXT, " + TIME_OF_NEXT_WATER + " TEXT, " +
+                WATER_FREQUENCY + " TEXT, " + DATE_OF_NEXT_FERTILIZE + " TEXT, " + TIME_OF_NEXT_FERTILIZE + " TEXT, " +
+                FERTILIZE_FREQUENCY + " TEXT, " + COLUMN_WATERED + " BOOL, " + COLUMN_FERTILIZED + " BOOL)";
         db.execSQL(plantTable);
 
         String waterTimers = "CREATE TABLE " + WATER_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(waterTimers);
 
         String fertilizeTimers = "CREATE TABLE " + FERTILIZE_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                FERTILIZE_DATE + " TEXT, " + TIME_OF_NEXT_FERTILIZE + " TEXT, " + FERTILIZE_FREQUENCY + " INTEGER)";
+                DATE_OF_NEXT_FERTILIZE + " TEXT, " + TIME_OF_NEXT_FERTILIZE + " TEXT, " + FERTILIZE_FREQUENCY + " INTEGER)";
         db.execSQL(fertilizeTimers);
 
     }
@@ -85,6 +85,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_DATE_ACQUIRED, plant.getDateAcquired());
         cv.put(COLUMN_CARE_INSTRUCTIONS, plant.getCareInstructions());
         cv.put(COLUMN_PHOTO_PATH, plant.getPhotoSource());
+        cv.put(DATE_OF_NEXT_WATER, plant.getNextWaterDate());
+        cv.put(TIME_OF_NEXT_WATER, plant.getNextWaterTimer());
+        cv.put(WATER_FREQUENCY, plant.getWaterFequency());
+        cv.put(DATE_OF_NEXT_FERTILIZE, plant.getNextfertilizeDate());
+        cv.put(TIME_OF_NEXT_FERTILIZE, plant.getGetNextfertilizeTime());
+        cv.put(FERTILIZE_FREQUENCY, plant.getFertilizeFrequency());
         cv.put(COLUMN_WATERED, plant.isWatered());
         cv.put(COLUMN_FERTILIZED, plant.isFertilized());
         long insert = database.insert(PLANT_TABLE, null, cv);
@@ -115,9 +121,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String plantDate = cursor.getString(4);
                 String plantCare = cursor.getString(5);
                 String photoPath = cursor.getString(6);
-                boolean plantWatered = cursor.getInt(7) == 1 ? true: false;
-                boolean plantFertilized = cursor.getInt(8) == 1 ? true: false;
-                Plant plant = new Plant(plantId, plantName, plantNickName, plantLocation, plantDate, plantCare, photoPath, plantWatered, plantFertilized);
+                String dateWater = cursor.getString(7);
+                String timeWater = cursor.getString(8);
+                String frequencyWater = cursor.getString(9);
+                String dateFertilize = cursor.getString(10);
+                String timeFertilize = cursor.getString(11);
+                String fertilizeFrequency = cursor.getString(12);
+                boolean plantWatered = cursor.getInt(13) == 1 ? true: false;
+                boolean plantFertilized = cursor.getInt(14) == 1 ? true: false;
+                Plant plant = new Plant(plantId, plantName, plantNickName, plantLocation, plantDate,
+                        plantCare, photoPath, dateWater, timeWater, frequencyWater, dateFertilize,
+                        timeFertilize, fertilizeFrequency, plantWatered, plantFertilized);
                 returnList.add(plant);
             } while (cursor.moveToNext());
         }
@@ -129,20 +143,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return returnList;
 
     }
-
-//    public List<Plant> DisplayPlants(){
-//        List<Plant> returnList = new ArrayList<>();
-//
-//        String queryString = "SELECT * FROM " + PLANT_TABLE;
-//        SQLiteDatabase database = this.getReadableDatabase();
-//        Cursor cursor = database.rawQuery(queryString, null);
-//        if (cursor.moveToFirst()){
-//            do {
-//                String Array = []
-//
-//            } while (cursor.moveToNext());
-//        }
-//    }
 
     /**
      * Deletes plants in database
@@ -194,7 +194,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean addFetrtizeTimer(FertilizeTimer fertilizeTimer) {
         SQLiteDatabase datebase = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(FERTILIZE_DATE, fertilizeTimer.getNextDateToDo());
+        cv.put(DATE_OF_NEXT_FERTILIZE, fertilizeTimer.getNextDateToDo());
         cv.put(TIME_OF_NEXT_FERTILIZE, fertilizeTimer.getNextTimeToDo());
         cv.put(FERTILIZE_FREQUENCY, fertilizeTimer.getHowOften());
         long insert = datebase.insert(FERTILIZE_TABLE, null, cv);
