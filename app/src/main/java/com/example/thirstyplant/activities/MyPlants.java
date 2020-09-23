@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thirstyplant.R;
-import com.example.thirstyplant.io.PlantDatabaseHelper;
+import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
 
 import java.io.File;
@@ -20,7 +20,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public class MyPlants extends AppCompatActivity {
-    PlantDatabaseHelper PLantDataBaseHelper;
+    DatabaseHelper PLantDataBaseHelper;
     GridLayout plantList;
     ArrayAdapter myPlants;
 
@@ -28,7 +28,7 @@ public class MyPlants extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_plants);
-        PLantDataBaseHelper = new PlantDatabaseHelper(MyPlants.this);
+        PLantDataBaseHelper = new DatabaseHelper(MyPlants.this);
         plantList = findViewById(R.id.myPlantList);
         showAllPlants();
     }

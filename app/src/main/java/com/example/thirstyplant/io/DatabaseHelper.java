@@ -8,14 +8,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.thirstyplant.model.FertilizeTimer;
 import com.example.thirstyplant.model.Plant;
+import com.example.thirstyplant.model.WaterTimer;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
-public class PlantDatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String PLANT_TABLE = "MY_PLANTS";
     public static final String COLUMN_PLANT_NAME = "PLANT_NAME";
@@ -27,13 +29,23 @@ public class PlantDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_WATERED = "WATERED";
     public static final String COLUMN_FERTILIZED = "FERTILIZED";
     public static final String COLUMN_ID = "ID";
+    public static final String WATER_TABLE = "WATER_TIMERS";
+    public static final String DATE_OF_NEXT_WATER = "DATE_OF_NEXT_WATER";
+    public static final String TIME_OF_NEXT_WATER = "TIME_OF_NEXT_WATER";
+    public static final String WATER_FREQUENCY = "HOW_OFTEN";
+    public static final String FERTILIZE_TABLE = "FERTILIZE_TIMERS";
+    public static final String FERTILIZE_DATE = "DATE_OF_NEXT_FERTILIZE";
+    public static final String TIME_OF_NEXT_FERTILIZE = "TIME_OF_NEXT_FERTILIZE";
+    public static final String FERTILIZE_FREQUENCY = "HOW_OFTEN";
 
-    public PlantDatabaseHelper(@Nullable Context context) {
-        super(context, "MyPlants", null, 2);
+
+
+    public DatabaseHelper(@Nullable Context context) {
+        super(context, "MyPlants", null, 3);
     }
 
     /**
-     * Creates new database
+     * Creates new plant, water and fertilizer timer tables
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -42,6 +54,15 @@ public class PlantDatabaseHelper extends SQLiteOpenHelper {
                 + " TEXT, " + COLUMN_DATE_ACQUIRED + " TEXT, " + COLUMN_CARE_INSTRUCTIONS + " TEXT, "
                 + COLUMN_PHOTO_PATH + " TEXT, " + COLUMN_WATERED + " BOOL, " + COLUMN_FERTILIZED + " BOOL)";
         db.execSQL(plantTable);
+
+        String waterTimers = "CREATE TABLE " + WATER_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DATE_OF_NEXT_WATER + " TEXT, " + TIME_OF_NEXT_WATER + " TEXT, " + WATER_FREQUENCY + " INTEGER)";
+        db.execSQL(waterTimers);
+
+        String fertilizeTimers = "CREATE TABLE " + FERTILIZE_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                FERTILIZE_DATE + " TEXT, " + TIME_OF_NEXT_FERTILIZE + " TEXT, " + FERTILIZE_FREQUENCY + " INTEGER)";
+        db.execSQL(fertilizeTimers);
+
     }
 
     /**
@@ -129,6 +150,68 @@ public class PlantDatabaseHelper extends SQLiteOpenHelper {
     public boolean deletePlant(Plant plant){
         SQLiteDatabase database = this.getWritableDatabase();
         String queryString = "DELETE FROM " + PLANT_TABLE + " WHERE " + COLUMN_ID + " = " + plant.getId();
+        Cursor cursor = database.rawQuery(queryString, null);
+        if (cursor.moveToFirst()){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Adds info for water timer
+     */
+    public boolean addWaterTimer(WaterTimer waterTimer) {
+        SQLiteDatabase datebase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(DATE_OF_NEXT_WATER, waterTimer.getNextDateToDo());
+        cv.put(TIME_OF_NEXT_WATER, waterTimer.getNextTimeToDo());
+        cv.put(WATER_FREQUENCY, waterTimer.getHowOften());
+        long insert = datebase.insert(WATER_TABLE, null, cv);
+        if (insert == -1){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    /**
+     * Deletes Water timers in table
+     */
+    public boolean deleteWaterTimer(WaterTimer waterTimer){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + WATER_TABLE + " WHERE " + COLUMN_ID + " = " + waterTimer.getId();
+        Cursor cursor = database.rawQuery(queryString, null);
+        if (cursor.moveToFirst()){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Adds info for Fertilize timer
+     */
+    public boolean addFetrtizeTimer(FertilizeTimer fertilizeTimer) {
+        SQLiteDatabase datebase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(FERTILIZE_DATE, fertilizeTimer.getNextDateToDo());
+        cv.put(TIME_OF_NEXT_FERTILIZE, fertilizeTimer.getNextTimeToDo());
+        cv.put(FERTILIZE_FREQUENCY, fertilizeTimer.getHowOften());
+        long insert = datebase.insert(FERTILIZE_TABLE, null, cv);
+        if (insert == -1){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    /**
+     * Deletes Fertilize timers in table
+     */
+    public boolean deleteFertilizeTimer(WaterTimer waterTimer){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + FERTILIZE_TABLE + " WHERE " + COLUMN_ID + " = " + waterTimer.getId();
         Cursor cursor = database.rawQuery(queryString, null);
         if (cursor.moveToFirst()){
             return true;

@@ -22,7 +22,7 @@
     <string name="what_is_kind_of_plant_is_it">What kind of plant is it?</string>
     <string name="nickname">Nickname</string>
     <string name="where_is_the_plant_located">Where is the plant located?</string>
-    <string name="date">MM/DD/YYYY</string>
+    <string name="date">YYYY/MM/DD</string>
     <string name="create_plant">Create Plant</string>
     <string name="fertilization_schedule">Fertilization Schedule...</string>
     <string name="watering_schedule">Watering schedule...</string>

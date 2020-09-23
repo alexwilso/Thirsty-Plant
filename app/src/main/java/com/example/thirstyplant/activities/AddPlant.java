@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.example.thirstyplant.R;
 import com.example.thirstyplant.model.Plant;
-import com.example.thirstyplant.io.PlantDatabaseHelper;
+import com.example.thirstyplant.io.DatabaseHelper;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,6 +35,7 @@ public class AddPlant extends AppCompatActivity {
     private ImageView plantPhoto;
     private final int requestImage = 101;
     private String plantPath = "app/src/main/res/drawable/plant.png";
+    JSONObject createPlant = new JSONObject();
     OutputStream outputStream;
 
 
@@ -72,6 +75,7 @@ public class AddPlant extends AppCompatActivity {
         });
     }
 
+
     /**
      * Adds Plant to database
      */
@@ -79,20 +83,24 @@ public class AddPlant extends AppCompatActivity {
         Plant plant;
         if (!missingData()) {
             try {
+                createPlant.put("Name", plantName.getText().toString());
+                createPlant.put("NickName", plantNickName.getText().toString());
+                createPlant.put("Location", plantLocation.getText().toString());
+                createPlant.put("Date", plantDate.getText().toString());
+                createPlant.put("Instruction", plantInstructions.getText().toString());
+                createPlant.put("Path", plantPath);
                 plant = new Plant(-1, plantName.getText().toString(), plantNickName.getText().toString(),
                         plantLocation.getText().toString(), plantDate.getText().toString(),
                         plantInstructions.getText().toString(), plantPath,false,
                         false);
-                Toast.makeText(AddPlant.this, plant.toString(), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 plant = new Plant(-1, "Error", "Error", "Error",
                         "Error", "Error", "Error", false, false);
                 Toast.makeText(AddPlant.this, "Error creating plant", Toast.LENGTH_LONG).show();
             }
-            PlantDatabaseHelper PLantDataBaseHelper = new PlantDatabaseHelper(AddPlant.this);
-            boolean success = PLantDataBaseHelper.addPlant(plant);
+            DatabaseHelper databaseHelper = new DatabaseHelper(AddPlant.this);
+            boolean success = databaseHelper.addPlant(plant);
             if (success) {
-                Toast.makeText(AddPlant.this, "True", Toast.LENGTH_LONG).show();
                 waterFertilize();
             }
         }
@@ -182,7 +190,7 @@ public class AddPlant extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                String date = month + "/" + dayOfMonth + "/" + year;
+                String date = year + "-" + (month<10?("0"+month):(month)) + "-" + (dayOfMonth<10?("0"+dayOfMonth):(dayOfMonth));
                 editText.setText(date);
             }
         }, year, month, day);
@@ -194,6 +202,7 @@ public class AddPlant extends AppCompatActivity {
      */
     private void waterFertilize(){
         Intent intent = new Intent(AddPlant.this, WaterSchedule.class);
+        intent.putExtra("createPlant", createPlant.toString());
         startActivity(intent);
     }
 }

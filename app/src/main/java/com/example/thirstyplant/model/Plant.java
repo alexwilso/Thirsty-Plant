@@ -12,10 +12,16 @@ public class Plant {
     private String dateAcquired;
     private String careInstructions;
     private String photoSource;
+    private String nextWaterDate;
+    private String nextWaterTimer;
+    private String waterFequency;
+    private String nextfertilizeDate;
+    private String getNextfertilizeTime;
+    private String fertilizeFrequency;
     private boolean watered;
     private boolean fertilized;
 
-    public Plant(int id, String plantName, String nickName, String location, String dateAcquired, String careInstructions, String photoSource, boolean watered, boolean fertilized) {
+    public Plant(int id, String plantName, String nickName, String location, String dateAcquired, String careInstructions, String photoSource, String nextWaterDate, String nextWaterTimer, String waterFequency, String nextfertilizeDate, String getNextfertilizeTime, String fertilizeFrequency, boolean watered, boolean fertilized) {
         this.id = id;
         this.plantName = plantName;
         this.nickName = nickName;
@@ -23,6 +29,12 @@ public class Plant {
         this.dateAcquired = dateAcquired;
         this.careInstructions = careInstructions;
         this.photoSource = photoSource;
+        this.nextWaterDate = nextWaterDate;
+        this.nextWaterTimer = nextWaterTimer;
+        this.waterFequency = waterFequency;
+        this.nextfertilizeDate = nextfertilizeDate;
+        this.getNextfertilizeTime = getNextfertilizeTime;
+        this.fertilizeFrequency = fertilizeFrequency;
         this.watered = watered;
         this.fertilized = fertilized;
     }
@@ -37,9 +49,63 @@ public class Plant {
                 ", dateAcquired='" + dateAcquired + '\'' +
                 ", careInstructions='" + careInstructions + '\'' +
                 ", photoSource='" + photoSource + '\'' +
+                ", nextWaterDate='" + nextWaterDate + '\'' +
+                ", nextWaterTimer='" + nextWaterTimer + '\'' +
+                ", waterFequency='" + waterFequency + '\'' +
+                ", nextfertilizeDate='" + nextfertilizeDate + '\'' +
+                ", getNextfertilizeTime='" + getNextfertilizeTime + '\'' +
+                ", fertilizeFrequency='" + fertilizeFrequency + '\'' +
                 ", watered=" + watered +
                 ", fertilized=" + fertilized +
                 '}';
+    }
+
+    public String getNextWaterDate() {
+        return nextWaterDate;
+    }
+
+    public String getNextWaterTimer() {
+        return nextWaterTimer;
+    }
+
+    public String getWaterFequency() {
+        return waterFequency;
+    }
+
+    public String getNextfertilizeDate() {
+        return nextfertilizeDate;
+    }
+
+    public String getGetNextfertilizeTime() {
+        return getNextfertilizeTime;
+    }
+
+    public String getFertilizeFrequency() {
+        return fertilizeFrequency;
+    }
+
+    public void setNextWaterDate(String nextWaterDate) {
+        this.nextWaterDate = nextWaterDate;
+    }
+
+    public void setNextWaterTimer(String nextWaterTimer) {
+        this.nextWaterTimer = nextWaterTimer;
+    }
+
+    public void setWaterFequency(String waterFequency) {
+        this.waterFequency = waterFequency;
+    }
+
+    public void setNextfertilizeDate(String nextfertilizeDate) {
+        this.nextfertilizeDate = nextfertilizeDate;
+    }
+
+    public void setGetNextfertilizeTime(String getNextfertilizeTime) {
+        this.getNextfertilizeTime = getNextfertilizeTime;
+    }
+
+    public void setFertilizeFrequency(String fertilizeFrequency) {
+        this.fertilizeFrequency = fertilizeFrequency;
     }
 
     public int getId() {
