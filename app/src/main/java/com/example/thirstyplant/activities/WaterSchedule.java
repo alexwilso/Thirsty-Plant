@@ -62,7 +62,6 @@ public class WaterSchedule extends AppCompatActivity {
 
         try {
             createPlant = new JSONObject(Objects.requireNonNull(getIntent().getStringExtra("createPlant")));
-            createNotificationChanne();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -87,7 +86,7 @@ public class WaterSchedule extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    addTimer(v);
+                    toNext(v);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -192,79 +191,89 @@ public class WaterSchedule extends AppCompatActivity {
         }
     }
 
+//    /**
+//     * Adds timer info to watertimer table
+//     */
+//    private void addTimer(View view) throws JSONException {
+//        createPlant.put("nextWaterDate", waterDate.getText().toString());
+//        createPlant.put("nextWaterTimer", waterTime.getText().toString());
+//        createPlant.put("waterFrequency", waterFrequency.getText().toString());
+//        System.out.println(createPlant);
+//        WaterTimer watertimer;
+//        if (!missingData()){
+//            try {
+//                watertimer = new WaterTimer(-1, waterDate.getText().toString(), waterTime.getText().toString(),
+//                        Integer.parseInt(waterFrequency.getText().toString()));
+//            } catch (Exception e){
+//                watertimer = new WaterTimer(-1, "error", "error", 0);
+//                Toast.makeText(WaterSchedule.this, "Error making timer", Toast.LENGTH_LONG).show();
+//            }
+//            boolean success = databaseHelper.addWaterTimer(watertimer);
+//            if (success){
+//                toNext(view);
+//            }
+//        }
+//    }
+
+
     /**
-     * Adds timer info to watertimer table
+     * Sets time and date for alarm
      */
-    private void addTimer(View view) throws JSONException {
-        createPlant.put("nextWaterDate", waterDate.getText().toString());
-        createPlant.put("nextWaterTimer", waterTime.getText().toString());
-        createPlant.put("waterFrequency", waterFrequency.getText().toString());
-        System.out.println(createPlant);
-        WaterTimer watertimer;
-        if (!missingData()){
-            try {
-                watertimer = new WaterTimer(-1, waterDate.getText().toString(), waterTime.getText().toString(),
-                        Integer.parseInt(waterFrequency.getText().toString()));
-            } catch (Exception e){
-                watertimer = new WaterTimer(-1, "error", "error", 0);
-                Toast.makeText(WaterSchedule.this, "Error making timer", Toast.LENGTH_LONG).show();
-            }
-            boolean success = databaseHelper.addWaterTimer(watertimer);
-            if (success){
-                toNext(view);
-            }
-        }
-    }
-
-    public void createAlarm(View view) throws JSONException {
-        Intent intent = new Intent(WaterSchedule.this, PlantReceiver.class);
-        intent.putExtra("notificationId", notificationId);
-        intent.putExtra("toWater", createPlant.getString("Name"));
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(WaterSchedule.this,
-                0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-
-
+    public Calendar setTimeDate(){
+        // Splits date into integers
         String[] arrOfString = waterDate.getText().toString().split("-");
         int year = Integer.parseInt(arrOfString[0]);
         int month = Integer.parseInt(arrOfString[1]);
         int day = Integer.parseInt(arrOfString[2]);
+
+        // Splits time into integers
         String[] timeToInt = waterTime.getText().toString().split(":");
         int hour = Integer.parseInt(timeToInt[0]);
         int minute = Integer.parseInt(timeToInt[1]);
-        long timeAtSet = System.currentTimeMillis();
-        long tenSecondstoMilli = 1000 * 10;
 
-        Calendar alarmAt = Calendar.getInstance();
-        alarmAt.set(Calendar.YEAR, year);
-        alarmAt.set(Calendar.MONTH, month);
-        alarmAt.set(Calendar.DAY_OF_MONTH, day);
-        alarmAt.set(Calendar.HOUR_OF_DAY, hour);
-        alarmAt.set(Calendar.MINUTE, minute);
-        alarmAt.set(Calendar.SECOND, 0);
-        long alarmStartTime = alarmAt.getTimeInMillis();
+        // Sets calender time to time chosen by user
+        Calendar alarmTime = Calendar.getInstance();
+        alarmTime.set(year, month -1, day, hour, minute, 0);
+//
+        return alarmTime;
+    }
+
+    /**
+     * Creates alarm at time chosen by user
+     */
+    public void createAlarm(View view) throws JSONException {
+        Intent intent = new Intent(WaterSchedule.this, PlantReceiver.class);
+        intent.putExtra("notificationId", notificationId);
+        intent.putExtra("toWater", createPlant.getString("Name"));
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(WaterSchedule.this,
+                0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Calendar alarmTime = setTimeDate();
+        long alarmStartTime = alarmTime.getTimeInMillis();
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
         Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
     }
-
-    /**
-     * Adds info to fertilize table to show plant will not be fertilized
-     */
-    private void noFertilizeTimer(){
-        FertilizeTimer fertilizeTimer;
-        try {
-            fertilizeTimer = new FertilizeTimer(-1, "N/A", "N/A", 0);
-        } catch (Exception e){
-            fertilizeTimer = new FertilizeTimer(-1, "N/A", "N/A", 0);
-            Toast.makeText(WaterSchedule.this, "Error making timer", Toast.LENGTH_LONG).show();
-        }
-        boolean success = databaseHelper.addFetrtizeTimer(fertilizeTimer);
-        if (success){
-            // Plant will not have fertilize timer
-        }
-    }
+//
+//    /**
+//     * Adds info to fertilize table to show plant will not be fertilized
+//     */
+//    private void noFertilizeTimer(){
+//        FertilizeTimer fertilizeTimer;
+//        try {
+//            fertilizeTimer = new FertilizeTimer(-1, "N/A", "N/A", 0);
+//        } catch (Exception e){
+//            fertilizeTimer = new FertilizeTimer(-1, "N/A", "N/A", 0);
+//            Toast.makeText(WaterSchedule.this, "Error making timer", Toast.LENGTH_LONG).show();
+//        }
+//        boolean success = databaseHelper.addFetrtizeTimer(fertilizeTimer);
+//        if (success){
+//            // Plant will not have fertilize timer
+//        }
+//    }
 
     /**
      * Prevents user from going back to add plant screen
@@ -278,10 +287,13 @@ public class WaterSchedule extends AppCompatActivity {
     /**
      * Adds Plant to table
      */
-    private void addPlant(JSONObject myPlant) {
+    private void addPlant(JSONObject myPlant, View view) throws JSONException {
         Plant plant;
         if (!missingData()) {
             try {
+                createPlant.put("nextWaterDate", waterDate.getText().toString());
+                createPlant.put("nextWaterTimer", waterTime.getText().toString());
+                createPlant.put("waterFrequency", waterFrequency.getText().toString());
                 plant = new Plant(-1, myPlant.getString("Name"), myPlant.getString("NickName"),
                         myPlant.getString("Location"), myPlant.getString("Date"),
                         myPlant.getString("Instruction"), myPlant.getString("Path"),
@@ -299,22 +311,11 @@ public class WaterSchedule extends AppCompatActivity {
             DatabaseHelper databaseHelper = new DatabaseHelper(WaterSchedule.this);
             boolean success = databaseHelper.addPlant(plant);
             if (success) {
+                toNext(view);
             }
         }
     }
 
-    private void  createNotificationChanne() throws JSONException {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence name = createPlant.getString("Name");
-            String description  = "Channel for " + createPlant.getString("Name");
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("waterNotify", name, importance);
-            channel.setDescription(description);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
 
     /**
      * Takes user to next fertilize activity if yes is checked and to home activity if not
@@ -329,9 +330,9 @@ public class WaterSchedule extends AppCompatActivity {
             createPlant.put("nextFertilizeDate", "N/A");
             createPlant.put("nextFertilizeTime", "N/A");
             createPlant.put("fertilizeFrequency", "N/A");
-            addPlant(createPlant);
+            addPlant(createPlant, view);
+//            noFertilizeTimer();
             createAlarm(view);
-            noFertilizeTimer();
             Intent noFertilize = new Intent(WaterSchedule.this, Home.class);
             startActivity(noFertilize);
         }
