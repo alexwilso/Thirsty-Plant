@@ -62,6 +62,7 @@ public class WaterSchedule extends AppCompatActivity {
 
         try {
             createPlant = new JSONObject(Objects.requireNonNull(getIntent().getStringExtra("createPlant")));
+            createNotificationChannel();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -95,6 +96,21 @@ public class WaterSchedule extends AppCompatActivity {
 
     }
 
+    private void createNotificationChannel(){
+//        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence charSequence = "Water ";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel("waterAlarm", charSequence, importance);
+            channel.setDescription("Alarm for watering");
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+    }
     /**
      * Throws error if text boxes left empty
      */

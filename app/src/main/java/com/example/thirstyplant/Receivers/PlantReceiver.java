@@ -29,15 +29,15 @@ public class PlantReceiver extends android.content.BroadcastReceiver {
         Intent toHome = new Intent(context, Home.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, toHome, 0);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence charSequence = "Water ";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-
-            NotificationChannel channel = new NotificationChannel(channelId, charSequence, importance);
-            notificationManager.createNotificationChannel(channel);
-        }
+//        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            CharSequence charSequence = "Water ";
+//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+//
+//            NotificationChannel channel = new NotificationChannel(channelId, charSequence, importance);
+//            notificationManager.createNotificationChannel(channel);
+//        }
 
         // Sets details of notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
@@ -49,6 +49,7 @@ public class PlantReceiver extends android.content.BroadcastReceiver {
                 .setAutoCancel(true);
 
         // calls notification
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(notificationID, builder.build());
 
     }
