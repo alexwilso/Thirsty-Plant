@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         String emailText = emailBox.getText().toString();
         String passwordText = passwordBox.getText().toString();
         if (emailText.isEmpty() && passwordText.isEmpty()){
-            Toast.makeText(MainActivity.this, "Please enter an email and a password", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Please enter an email and a password", Toast.LENGTH_SHORT).show();
         }
         else if (emailText.isEmpty()){
             emailBox.setError("Please enter an email");
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()){
-                        Toast.makeText(MainActivity.this, "Login failed, Please try again", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Login failed, Please try again", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         Intent toHome = new Intent(MainActivity.this, Home.class);
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         else{
-            Toast.makeText(MainActivity.this, "Error occurred, Please try again", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Error occurred, Please try again", Toast.LENGTH_SHORT).show();
         }
     }
 

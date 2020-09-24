@@ -34,7 +34,8 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <receiver android:name=".Receivers.PlantReceiver"/>
+        <receiver android:name=".Receivers.WaterReceiver"/>
+        <receiver android:name=".Receivers.FertilizeReceiver"/>
     </application>
 
 </manifest>
