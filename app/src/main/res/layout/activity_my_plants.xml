@@ -21,15 +21,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.042" />
 
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/myPlantList"
-        android:layout_width="357dp"
-        android:layout_height="586dp"
+    <ListView
+        android:id="@+id/displayPlants"
+        android:layout_width="369dp"
+        android:layout_height="610dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14">
-
-    </androidx.gridlayout.widget.GridLayout>
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

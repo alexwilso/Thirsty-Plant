@@ -1,13 +1,16 @@
 package com.example.thirstyplant.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.gridlayout.widget.GridLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.thirstyplant.R;
@@ -20,27 +23,38 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public class MyPlants extends AppCompatActivity {
-    DatabaseHelper PLantDataBaseHelper;
-    GridLayout plantList;
+    DatabaseHelper plantdatabasehelper;
+    ListView plantList;
     ArrayAdapter myPlants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_plants);
-        PLantDataBaseHelper = new DatabaseHelper(MyPlants.this);
-        plantList = findViewById(R.id.myPlantList);
+        plantList = findViewById(R.id.displayPlants);
+        plantdatabasehelper = new DatabaseHelper(MyPlants.this);
         showAllPlants();
+
+        plantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Plant plant = (Plant) parent.getItemAtPosition(position);
+                plantdatabasehelper.deletePlant(plant);
+                showAllPlants();
+            }
+        });
     }
 
     private void showAllPlants() {
-        myPlants = new ArrayAdapter<Plant>(MyPlants.this, android.R.layout.simple_list_item_1,
-                PLantDataBaseHelper.getAllPlants());
-        List<Plant> plantArray = PLantDataBaseHelper.getAllPlants();
-        for (int x = 0; x < PLantDataBaseHelper.getAllPlants().size(); x++){
-            String plantPath = plantArray.get(x).getPlantName() + "_" + plantArray.get(x).getNickName();
-            plantPicture(plantPath, plantArray.get(x).getPlantName());
-        }
+        myPlants = new ArrayAdapter<Plant>(MyPlants.this, android.R.layout.simple_expandable_list_item_1, plantdatabasehelper.getAllPlants());
+        plantList.setAdapter(myPlants);
+
+
+
+//        for (int x = 0; x < plantdatabasehelper.getAllPlants().size(); x++){
+//            String plantPath = plantArray.get(x).getPlantName() + "_" + plantArray.get(x).getNickName();
+//            plantPicture(plantPath, plantArray.get(x).getPlantName());
+//        }
 //        plantList.setAdapter(myPlants);
     }
 
