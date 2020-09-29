@@ -46,5 +46,7 @@
     <string name="set_schedule">Set Schedule</string>
     <string name="filePath">/data/data/com.example.thirstyplant.controller/app_plantPhotos/</string>
     <string name="plantPath">/data/data/com.example.thirstyplant.controller/app_plantPhotos/</string>
+    <string name="date_aquired">Date Aquired</string>
+    <string name="nick_name">Nick Name</string>
 
 </resources>

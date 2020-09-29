@@ -124,8 +124,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         database.close();
+        getInfo(returnList);
         return returnList;
 
+    }
+
+    public void getInfo(List<Plant> plants){
+        for (int x = 0; x < plants.size();x++){
+            System.out.println(plants.get(x).getPlantName());
+        }
     }
 
 

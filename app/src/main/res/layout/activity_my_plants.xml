@@ -21,13 +21,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.042" />
 
-    <ListView
-        android:id="@+id/displayPlants"
-        android:layout_width="369dp"
-        android:layout_height="610dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerPlants"
+        android:layout_width="389dp"
+        android:layout_height="621dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/textView14"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

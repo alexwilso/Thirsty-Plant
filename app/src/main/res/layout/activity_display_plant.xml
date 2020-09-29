@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.thirstyplant.activities.DisplayPlant">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_width="230dp"
+                android:layout_height="300dp"
+                android:background="#2d2d2d2d"
+                android:id="@+id/displayPhoto"
+                android:scaleType="centerCrop"/>
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/plant_name"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:textSize="10dp"/>-->
+
+            <TextView
+                android:id="@+id/displayName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plant_name"
+                android:layout_marginTop="1dp"
+                android:textSize="25sp"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:id="@+id/displayNickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nick_name"
+                android:layout_margin="10dp"
+                android:textSize="18sp"
+                android:padding="8dp"/>
+
+            <TextView
+                android:id="@+id/displayLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:layout_margin="10dp"
+                android:textSize="18sp"
+                android:padding="8dp"/>
+
+            <TextView
+                android:id="@+id/displayDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_aquired"
+                android:layout_margin="10dp"
+                android:textSize="18sp"
+                android:padding="8dp"/>
+
+            <TextView
+                android:id="@+id/displayWater"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of next water"
+                android:layout_margin="10dp"
+                android:textSize="18sp"
+                android:padding="8dp"/>
+
+            <TextView
+                android:id="@+id/displayFertilize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of next fertilize"
+                android:layout_margin="10dp"
+                android:textSize="18sp"
+                android:padding="8dp"/>
+
+            <TextView
+                android:id="@+id/displayCare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Care Instructions"
+                android:layout_margin="10dp"
+                android:textSize="18sp"
+                android:padding="8dp"/>
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+        
+
+</LinearLayout>

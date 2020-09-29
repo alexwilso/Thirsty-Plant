@@ -4,7 +4,7 @@
 
     <uses-feature
         android:name="android.hardware.Camera"
-        android:required="true"></uses-feature>
+        android:required="true" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.FertilizeSchedule"></activity>
+        <activity android:name=".activities.DisplayPlant"></activity>
+        <activity android:name=".activities.FertilizeSchedule" />
         <activity android:name=".activities.MyPlants" />
         <activity android:name=".activities.WaterSchedule" />
         <activity android:name=".activities.AddPlant" />
@@ -34,8 +35,8 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <receiver android:name=".Receivers.WaterReceiver"/>
-        <receiver android:name=".Receivers.FertilizeReceiver"/>
+        <receiver android:name=".Receivers.WaterReceiver" />
+        <receiver android:name=".Receivers.FertilizeReceiver" />
     </application>
 
 </manifest>
