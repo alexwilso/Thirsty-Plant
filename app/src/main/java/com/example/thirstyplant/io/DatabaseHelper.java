@@ -146,9 +146,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Deletes plants in database
      */
-    public boolean deletePlant(Plant plant) {
+    public boolean deletePlant(int num) {
         SQLiteDatabase database = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + PLANT_TABLE + " WHERE " + COLUMN_ID + " = " + plant.getId();
+        String queryString = "DELETE FROM " + PLANT_TABLE + " WHERE " + COLUMN_ID + " = " + num;
         Cursor cursor = database.rawQuery(queryString, null);
         if (cursor.moveToFirst()) {
             return true;

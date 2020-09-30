@@ -48,5 +48,11 @@
     <string name="plantPath">/data/data/com.example.thirstyplant.controller/app_plantPhotos/</string>
     <string name="date_aquired">Date Aquired</string>
     <string name="nick_name">Nick Name</string>
+    <string name="displayName">Name:</string>
+    <string name="displayNickname">Nickname:</string>
+    <string name="displayLocation">Location:</string>
+    <string name="displayDate">Owned Since:</string>
+    <string name="disaplyWater">Next Water:</string>
+    <string name="displayFertilize">Next Fertilize:</string>
 
 </resources>

@@ -20,88 +20,217 @@
 
 
             <ImageView
+                android:id="@+id/displayPhoto"
                 android:layout_width="230dp"
                 android:layout_height="300dp"
                 android:background="#2d2d2d2d"
-                android:id="@+id/displayPhoto"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop" />
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/plant_name"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:textSize="10dp"/>-->
+                <TextView
+                    android:id="@+id/displayName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plant_name"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#9A0D0D"/>
 
-            <TextView
-                android:id="@+id/displayName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/plant_name"
-                android:layout_marginTop="1dp"
-                android:textSize="25sp"
-                android:textStyle="bold"/>
-
-
-            <TextView
-                android:id="@+id/displayNickName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nick_name"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
                 android:layout_margin="10dp"
-                android:textSize="18sp"
-                android:padding="8dp"/>
+                android:padding="8dp">
 
-            <TextView
-                android:id="@+id/displayLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/location"
-                android:layout_margin="10dp"
-                android:textSize="18sp"
-                android:padding="8dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/displayNickname"
+                    android:textColor="#0B5D1E"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
 
-            <TextView
-                android:id="@+id/displayDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date_aquired"
-                android:layout_margin="10dp"
-                android:textSize="18sp"
-                android:padding="8dp"/>
+                <TextView
+                    android:id="@+id/displayNickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nick_name"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/displayWater"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date of next water"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
                 android:layout_margin="10dp"
-                android:textSize="18sp"
-                android:padding="8dp"/>
+                android:padding="8dp">
 
-            <TextView
-                android:id="@+id/displayFertilize"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date of next fertilize"
-                android:layout_margin="10dp"
-                android:textSize="18sp"
-                android:padding="8dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/displayLocation"
+                    android:textColor="#0B5D1E"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
 
-            <TextView
-                android:id="@+id/displayCare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Care Instructions"
+                <TextView
+                    android:id="@+id/displayLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
                 android:layout_margin="10dp"
-                android:textSize="18sp"
-                android:padding="8dp"/>
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/displayDate"
+                    android:textColor="#0B5D1E"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/displayDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_aquired"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/disaplyWater"
+                    android:textColor="#0B5D1E"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/displayWater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of next water"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/displayFertilize"
+                    android:textColor="#0B5D1E"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/displayFertilize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of next fertilize"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="10dp"
+                    android:text="Care:"
+                    android:textColor="#0B5D1E"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/displayCare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Care Instructions"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:padding="8dp">
+
+
+                <Button
+                    android:id="@+id/waterPlant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:background="#3F51B5"
+                    android:drawableEnd="@drawable/water"
+                    android:text="Water"
+                    android:paddingEnd="10dp"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/fertilizePlant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Fertilzie"
+                    android:textColor="#ffffff"
+                    android:background="#9A0D0D"
+                    android:layout_marginEnd="10dp"/>
+
+                <Button
+                    android:id="@+id/deletePlant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Delete"
+                    android:textColor="#ffffff"
+                    android:layout_marginEnd="10sp"
+                    android:background="#000000"/>
+            </LinearLayout>
 
 
         </LinearLayout>
 
 
     </androidx.core.widget.NestedScrollView>
-        
+
 
 </LinearLayout>

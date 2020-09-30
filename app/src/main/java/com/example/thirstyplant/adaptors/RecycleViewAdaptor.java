@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcelable;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,8 +73,8 @@ public class RecycleViewAdaptor extends RecyclerView.Adapter<RecycleViewAdaptor.
                 displayPlant.putExtra("Fertilize", plantList.get(position).getNextfertilizeDate());
                 displayPlant.putExtra("Care", plantList.get(position).getCareInstructions());
                 displayPlant.putExtra("Path", plantList.get(position).getPhotoSource());
+                displayPlant.putExtra("Plant", plantList.get(position).getId());
                 myPlants.startActivity(displayPlant);
-
 
             }
         });

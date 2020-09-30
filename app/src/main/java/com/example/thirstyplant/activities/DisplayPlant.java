@@ -2,13 +2,18 @@ package com.example.thirstyplant.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thirstyplant.R;
+import com.example.thirstyplant.io.DatabaseHelper;
+import com.example.thirstyplant.model.Plant;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +23,9 @@ import java.util.Objects;
 public class DisplayPlant extends AppCompatActivity {
     TextView plantName, plantNickName, plantLocation, plantDate, plantWater, plantFertilize, plantPath, plantCare;
     ImageView plantPhoto;
+    Button water, fertilize, delete;
+    DatabaseHelper databaseHelper;
+    int plantNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,9 @@ public class DisplayPlant extends AppCompatActivity {
         plantWater = findViewById(R.id.displayWater);
         plantFertilize = findViewById(R.id.displayFertilize);
         plantCare = findViewById(R.id.displayCare);
+        delete = findViewById(R.id.deletePlant);
+        plantNum = getIntent().getIntExtra("Plant", -2);
+        databaseHelper = new DatabaseHelper(DisplayPlant.this);
         setPhoto();
         setName();
         setNickname();
@@ -39,6 +50,12 @@ public class DisplayPlant extends AppCompatActivity {
         setWater();
         setFertilize();
         setCare();
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deletePlant();
+            }
+        });
     }
 
 
@@ -106,6 +123,14 @@ public class DisplayPlant extends AppCompatActivity {
      */
     public void setCare(){
         plantCare.setText(getIntent().getStringExtra("Care"));
+    }
+
+    public void deletePlant(){
+        System.out.println(plantNum);
+        databaseHelper.deletePlant(plantNum);
+        Intent toDisplay = new Intent(DisplayPlant.this, MyPlants.class);
+        startActivity(toDisplay);
+
     }
 
 }
