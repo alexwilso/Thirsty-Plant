@@ -6,6 +6,58 @@
     android:layout_height="match_parent"
     tools:context=".activities.Home">
 
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="283dp"
+        android:layout_height="43dp"
+        android:fontFamily="@font/gochi_hand"
+        android:text="Needs Fertilizing..."
+        android:textColor="#9A0D0D"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.479" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ToFertilize"
+        android:layout_width="381dp"
+        android:layout_height="257dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16"
+        app:layout_constraintVertical_bias="0.775" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ToWater"
+        android:layout_width="385dp"
+        android:layout_height="260dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.615"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16"
+        app:layout_constraintVertical_bias="0.019" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="249dp"
+        android:layout_height="39dp"
+        android:fontFamily="@font/gochi_hand"
+        android:text="Needs Watering..."
+        android:textColor="#3F51B5"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
     <Button
         android:id="@+id/myPlants"
         android:layout_width="172dp"

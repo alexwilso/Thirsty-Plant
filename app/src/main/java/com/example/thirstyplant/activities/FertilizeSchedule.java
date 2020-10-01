@@ -38,6 +38,7 @@ public class FertilizeSchedule extends AppCompatActivity {
     Calendar calendar;
     JSONObject createPlant = new JSONObject();
     int notificationId = 200;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class FertilizeSchedule extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    id = (int) System.currentTimeMillis();
                     addPlant(createPlant, v);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -118,8 +120,8 @@ public class FertilizeSchedule extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 if (inPast(year, month, dayOfMonth)) {
                     month = month + 1;
-//                    String date = year + "-" + (month<10?("0"+month):(month)) + "-" + (dayOfMonth<10?("0"+dayOfMonth):(dayOfMonth));
-                    String date = year + "-" + month + "-" + dayOfMonth;
+                    String date = year + "-" + (month<10?("0"+month):(month)) + "-" + (dayOfMonth<10?("0"+dayOfMonth):(dayOfMonth));
+//                    String date = year + "-" + month + "-" + dayOfMonth;
                     editText.setText(date);
                 }
             }
@@ -157,8 +159,8 @@ public class FertilizeSchedule extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(FertilizeSchedule.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//                String time = (hourOfDay<10?("0"+hourOfDay):(hourOfDay)) + ":" + (minute<10?("0"+minute):(minute));
-                String time = hourOfDay + ":" + minute;
+                String time = (hourOfDay<10?("0"+hourOfDay):(hourOfDay)) + ":" + (minute<10?("0"+minute):(minute));
+//                String time = hourOfDay + ":" + minute;
                 editText.setText(time);
             }
         }, hour, minute, false);
@@ -191,7 +193,7 @@ public class FertilizeSchedule extends AppCompatActivity {
                         myPlant.getString("Instruction"), myPlant.getString("Path"),
                         myPlant.getString("nextWaterDate"), myPlant.getString("nextWaterTimer"),
                         myPlant.getString("waterFrequency"), myPlant.getString("nextFertilizeDate"),
-                        myPlant.getString("nextFertilizeTime"), myPlant.getString("fertilizeFrequency"),
+                        myPlant.getString("nextFertilizeTime"), myPlant.getString("fertilizeFrequency"), id,
                         false, false);
             } catch (Exception e){
                 plant = new Plant(-1, "Error", "Error", "Error",
@@ -254,10 +256,9 @@ public class FertilizeSchedule extends AppCompatActivity {
         Intent intent = new Intent(FertilizeSchedule.this, FertilizeReceiver.class);
         intent.putExtra("notificationId", notificationId);
         intent.putExtra("toFertilize", "Name: " + createPlant.getString("Name") + " Location: " + createPlant.getString("Location"));
-        int id = (int) System.currentTimeMillis();
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(FertilizeSchedule.this,
-                id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 

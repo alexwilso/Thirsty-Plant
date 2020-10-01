@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.DisplayPlant"></activity>
+        <activity android:name=".controller.to_fertilize"></activity>
+        <activity android:name=".controller.to_do_plants" />
+        <activity android:name=".activities.DisplayPlant" />
         <activity android:name=".activities.FertilizeSchedule" />
         <activity android:name=".activities.MyPlants" />
         <activity android:name=".activities.WaterSchedule" />
@@ -37,6 +39,7 @@
 
         <receiver android:name=".Receivers.WaterReceiver" />
         <receiver android:name=".Receivers.FertilizeReceiver" />
+
     </application>
 
 </manifest>

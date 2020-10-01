@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.thirstyplant.R;
-import com.example.thirstyplant.adaptors.RecycleViewAdaptor;
+import com.example.thirstyplant.adaptors.MyPlantAdaptor;
 import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
 
@@ -31,8 +31,9 @@ public class MyPlants extends AppCompatActivity {
         plantDatabaseHelper = new DatabaseHelper(MyPlants.this);
         myPlantList = new ArrayList<>();
         addPlants(myPlantList);
+
         RecyclerView myView = (RecyclerView) findViewById(R.id.recyclerPlants);
-        RecycleViewAdaptor myAdaptor = new RecycleViewAdaptor(MyPlants.this, myPlantList);
+        MyPlantAdaptor myAdaptor = new MyPlantAdaptor(MyPlants.this, myPlantList);
         myView.setLayoutManager(new GridLayoutManager(MyPlants.this, 2));
         myView.setAdapter(myAdaptor);
 

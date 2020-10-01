@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Parcelable;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,19 +18,17 @@ import com.example.thirstyplant.R;
 import com.example.thirstyplant.activities.DisplayPlant;
 import com.example.thirstyplant.model.Plant;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class RecycleViewAdaptor extends RecyclerView.Adapter<RecycleViewAdaptor.MyViewHolder> {
+public class MyPlantAdaptor extends RecyclerView.Adapter<MyPlantAdaptor.MyViewHolder> {
 
     private Context myPlants;
     private List<Plant> plantList;
 
-    public RecycleViewAdaptor(Context myPlants, List<Plant> plantList) {
+    public MyPlantAdaptor(Context myPlants, List<Plant> plantList) {
         this.myPlants = myPlants;
         this.plantList = plantList;
     }
@@ -42,9 +38,10 @@ public class RecycleViewAdaptor extends RecyclerView.Adapter<RecycleViewAdaptor.
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         LayoutInflater layoutInflater = LayoutInflater.from(myPlants);
-        view = layoutInflater.inflate(R.layout.plant_views, parent, false);
+        view = layoutInflater.inflate(R.layout.activity_plant_views, parent, false);
         return new MyViewHolder(view);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
@@ -74,6 +71,9 @@ public class RecycleViewAdaptor extends RecyclerView.Adapter<RecycleViewAdaptor.
                 displayPlant.putExtra("Care", plantList.get(position).getCareInstructions());
                 displayPlant.putExtra("Path", plantList.get(position).getPhotoSource());
                 displayPlant.putExtra("Plant", plantList.get(position).getId());
+                displayPlant.putExtra("TimeW", plantList.get(position).getNextWaterTimer());
+                displayPlant.putExtra("TimeF", plantList.get(position).getGetNextfertilizeTime());
+                displayPlant.putExtra("Intent", plantList.get(position).getIntent());
                 myPlants.startActivity(displayPlant);
 
             }
@@ -93,9 +93,9 @@ public class RecycleViewAdaptor extends RecyclerView.Adapter<RecycleViewAdaptor.
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            plantName = (TextView) itemView.findViewById(R.id.photoName);
-            plantPhoto = (ImageView) itemView.findViewById(R.id.plantPhoto);
-            plantCard = (CardView) itemView.findViewById(R.id.plantCard);
+            plantName = itemView.findViewById(R.id.photoName);
+            plantPhoto =  itemView.findViewById(R.id.plantPhoto);
+            plantCard = itemView.findViewById(R.id.plantCard);
         }
     }
 }

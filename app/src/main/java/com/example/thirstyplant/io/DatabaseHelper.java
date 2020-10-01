@@ -6,15 +6,24 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.example.thirstyplant.model.FertilizeTimer;
 import com.example.thirstyplant.model.Plant;
 import com.example.thirstyplant.model.WaterTimer;
 
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -127,6 +136,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         getInfo(returnList);
         return returnList;
 
+    }
+
+    /**
+     * Returns all plants who are overdo to be watered
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public List<Plant> toBeWatered(){
+        List<Plant> toBeWatered = getAllPlants();
+        DateFormat f = new SimpleDateFormat("yyyy-mm-dd");
+        for (int x = 0; x < toBeWatered.size(); x++){
+            Date water = f.parse(toBeWatered.get(x).getNextWaterDate(), new ParsePosition(0));
+            Date today = f.parse(LocalDate.now().toString(), new ParsePosition(0));
+            if (!(water.compareTo(today) <= 0)){
+                toBeWatered.remove(x);
+            }
+        }
+
+        return toBeWatered;
+    }
+
+    /**
+     * Returns all plants who are overdo to be fertilzied
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public List<Plant> toBeFertilized(){
+        List<Plant> toBeFertilized = getAllPlants();
+        DateFormat f = new SimpleDateFormat("yyyy-mm-dd");
+        for (int x = 0; x < toBeFertilized.size(); x++) {
+            if (toBeFertilized.get(x).getNextfertilizeDate().equals("N/A")) {
+                toBeFertilized.remove(x);
+            } else {
+                Date fertilize = f.parse(toBeFertilized.get(x).getNextfertilizeDate(), new ParsePosition(0));
+                Date today = f.parse(LocalDate.now().toString(), new ParsePosition(0));
+                System.out.println(fertilize.compareTo(today));
+                if (!(fertilize.compareTo(today) <= 0)) {
+                    toBeFertilized.remove(x);
+                }
+            }
+        }
+        return toBeFertilized;
     }
 
     public void getInfo(List<Plant> plants){

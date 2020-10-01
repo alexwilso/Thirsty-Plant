@@ -2,16 +2,21 @@ package com.example.thirstyplant.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.se.omapi.Session;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thirstyplant.R;
+import com.example.thirstyplant.Receivers.WaterReceiver;
 import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
 
@@ -26,6 +31,7 @@ public class DisplayPlant extends AppCompatActivity {
     Button water, fertilize, delete;
     DatabaseHelper databaseHelper;
     int plantNum;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class DisplayPlant extends AppCompatActivity {
         plantFertilize = findViewById(R.id.displayFertilize);
         plantCare = findViewById(R.id.displayCare);
         delete = findViewById(R.id.deletePlant);
+        id = getIntent().getIntExtra("Intent", 0);
         plantNum = getIntent().getIntExtra("Plant", -2);
         databaseHelper = new DatabaseHelper(DisplayPlant.this);
         setPhoto();
@@ -108,14 +115,17 @@ public class DisplayPlant extends AppCompatActivity {
      * Sets next water date with string passed with intent
      */
     public void setWater(){
-        plantWater.setText(getIntent().getStringExtra("Water"));
+        String time = "Date: " + getIntent().getStringExtra("Water") + " Time: " + getIntent().getStringExtra("TimeW");
+        plantWater.setText(time);
     }
 
     /**
      * Sets next fertilize date with string passed with intent
      */
     public void setFertilize(){
-        plantFertilize.setText(getIntent().getStringExtra("Fertilize"));
+        String time = "Date: " + getIntent().getStringExtra("Fertilize") + " Time: " + getIntent().getStringExtra("TimeF");
+
+        plantFertilize.setText(time);
     }
 
     /**
@@ -130,6 +140,16 @@ public class DisplayPlant extends AppCompatActivity {
         databaseHelper.deletePlant(plantNum);
         Intent toDisplay = new Intent(DisplayPlant.this, MyPlants.class);
         startActivity(toDisplay);
+        deleteAlarms();
+
+    }
+
+    public void deleteAlarms(){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(getApplicationContext(), WaterReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+                id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
 
     }
 

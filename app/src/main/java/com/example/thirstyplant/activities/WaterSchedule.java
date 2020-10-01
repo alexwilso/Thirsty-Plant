@@ -40,6 +40,7 @@ public class WaterSchedule extends AppCompatActivity {
     DatabaseHelper databaseHelper = new DatabaseHelper(WaterSchedule.this);
     JSONObject createPlant = new JSONObject();
     int notificationId = 100;
+    int id;
 
 
     @Override
@@ -53,10 +54,10 @@ public class WaterSchedule extends AppCompatActivity {
         yes = findViewById(R.id.checkBoxYes);
         setSchedule = findViewById(R.id.setSchedule);
         calendar = Calendar.getInstance();
+        createNotificationChannel();
 
         try {
             createPlant = new JSONObject(Objects.requireNonNull(getIntent().getStringExtra("createPlant")));
-            createNotificationChannel();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -147,8 +148,8 @@ public class WaterSchedule extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 if (inPast(year, month, dayOfMonth)) {
                     month = month + 1;
-//                    String date = year + "-" + (month<10?("0"+month):(month)) + "-" + (dayOfMonth<10?("0"+dayOfMonth):(dayOfMonth));
-                    String date = year + "-" + month + "-" + dayOfMonth;
+                    String date = year + "-" + (month<10?("0"+month):(month)) + "-" + (dayOfMonth<10?("0"+dayOfMonth):(dayOfMonth));
+//                    String date = year + "-" + month + "-" + dayOfMonth;
                     editText.setText(date);
                 }
             }
@@ -167,8 +168,8 @@ public class WaterSchedule extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 System.out.println(hourOfDay);
-//                String time = (hourOfDay<10?("0"+hourOfDay):(hourOfDay)) + ":" + (minute<10?("0"+minute):(minute));
-                String time = hourOfDay + ":" + minute;
+                String time = (hourOfDay<10?("0"+hourOfDay):(hourOfDay)) + ":" + (minute<10?("0"+minute):(minute));
+//                String time = hourOfDay + ":" + minute;
                 editText.setText(time);
             }
         }, hour, minute, false);
@@ -190,7 +191,7 @@ public class WaterSchedule extends AppCompatActivity {
                         myPlant.getString("Instruction"), myPlant.getString("Path"),
                         myPlant.getString("nextWaterDate"), myPlant.getString("nextWaterTimer"),
                         myPlant.getString("waterFrequency"), myPlant.getString("nextFertilizeDate"),
-                        myPlant.getString("nextFertilizeTime"), myPlant.getString("fertilizeFrequency"),
+                        myPlant.getString("nextFertilizeTime"), myPlant.getString("fertilizeFrequency"), id,
                         false, false);
             } catch (Exception e) {
                 plant = new Plant(-1, "Error", "Error", "Error",
@@ -257,10 +258,9 @@ public class WaterSchedule extends AppCompatActivity {
         Intent intent = new Intent(WaterSchedule.this, WaterReceiver.class);
         intent.putExtra("notificationId", notificationId);
         intent.putExtra("toWater", "Name: " + createPlant.getString("Name") + " Location: " + createPlant.getString("Location"));
-        int id = (int) System.currentTimeMillis();
         // Look at flag here
         PendingIntent pendingIntent = PendingIntent.getBroadcast(WaterSchedule.this,
-                id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
@@ -287,6 +287,7 @@ public class WaterSchedule extends AppCompatActivity {
             createPlant.put("nextFertilizeDate", "N/A");
             createPlant.put("nextFertilizeTime", "N/A");
             createPlant.put("fertilizeFrequency", "N/A");
+            id = (int) System.currentTimeMillis();
             if (addPlant(createPlant, view)){
                 createAlarm(view);
                 Intent noFertilize = new Intent(WaterSchedule.this, Home.class);

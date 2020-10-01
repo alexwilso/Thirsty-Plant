@@ -18,8 +18,28 @@ public class Plant {
     private String nextfertilizeDate;
     private String getNextfertilizeTime;
     private String fertilizeFrequency;
+    private int intent;
     private boolean watered;
     private boolean fertilized;
+
+    public Plant(int id, String plantName, String nickName, String location, String dateAcquired, String careInstructions, String photoSource, String nextWaterDate, String nextWaterTimer, String waterFequency, String nextfertilizeDate, String getNextfertilizeTime, String fertilizeFrequency, int intent, boolean watered, boolean fertilized) {
+        this.id = id;
+        this.plantName = plantName;
+        this.nickName = nickName;
+        this.location = location;
+        this.dateAcquired = dateAcquired;
+        this.careInstructions = careInstructions;
+        this.photoSource = photoSource;
+        this.nextWaterDate = nextWaterDate;
+        this.nextWaterTimer = nextWaterTimer;
+        this.waterFequency = waterFequency;
+        this.nextfertilizeDate = nextfertilizeDate;
+        this.getNextfertilizeTime = getNextfertilizeTime;
+        this.fertilizeFrequency = fertilizeFrequency;
+        this.intent = intent;
+        this.watered = watered;
+        this.fertilized = fertilized;
+    }
 
     public Plant(int id, String plantName, String nickName, String location, String dateAcquired, String careInstructions, String photoSource, String nextWaterDate, String nextWaterTimer, String waterFequency, String nextfertilizeDate, String getNextfertilizeTime, String fertilizeFrequency, boolean watered, boolean fertilized) {
         this.id = id;
@@ -106,6 +126,10 @@ public class Plant {
 
     public void setFertilizeFrequency(String fertilizeFrequency) {
         this.fertilizeFrequency = fertilizeFrequency;
+    }
+
+    public int getIntent() {
+        return intent;
     }
 
     public int getId() {
