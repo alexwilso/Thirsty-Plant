@@ -199,7 +199,7 @@ public class FertilizeSchedule extends AppCompatActivity {
                 plant = new Plant(-1, "Error", "Error", "Error",
                         "Error", "Error", "Error", "Eror",
                         "Error", "Error", "Error", "Error",
-                        "Error", false, false);
+                        "Error", 1, false, false);
                 Toast.makeText(FertilizeSchedule.this, "Error creating plant", Toast.LENGTH_LONG).show();
             }
             DatabaseHelper databaseHelper = new DatabaseHelper(FertilizeSchedule.this);

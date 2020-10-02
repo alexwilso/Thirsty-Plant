@@ -29,7 +29,7 @@
             android:text="Plant Name"/>
 
         <Button
-            android:id="@+id/toDoButton"
+            android:id="@+id/ToDoWater"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="Water"

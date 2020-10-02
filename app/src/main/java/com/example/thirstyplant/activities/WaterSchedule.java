@@ -25,6 +25,7 @@ import com.example.thirstyplant.R;
 import com.example.thirstyplant.Receivers.WaterReceiver;
 import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
+import com.example.thirstyplant.notifications.NotificationHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -197,7 +198,7 @@ public class WaterSchedule extends AppCompatActivity {
                 plant = new Plant(-1, "Error", "Error", "Error",
                         "Error", "Error", "Error", "Eror",
                         "Error", "Error", "Error", "Error",
-                        "Error", false, false);
+                        "Error", 1, false, false);
                 Toast.makeText(WaterSchedule.this, "Error creating plant", Toast.LENGTH_LONG).show();
             }
             DatabaseHelper databaseHelper = new DatabaseHelper(WaterSchedule.this);

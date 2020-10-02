@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,15 @@ import com.example.thirstyplant.model.Plant;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyPlantAdaptor extends RecyclerView.Adapter<MyPlantAdaptor.MyViewHolder> {
 
     private Context myPlants;
     private List<Plant> plantList;
+    private Plant plant;
 
     public MyPlantAdaptor(Context myPlants, List<Plant> plantList) {
         this.myPlants = myPlants;
@@ -45,6 +49,7 @@ public class MyPlantAdaptor extends RecyclerView.Adapter<MyPlantAdaptor.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+        plant = plantList.get(position);
         holder.plantName.setText(plantList.get(position).getPlantName());
         if (plantList.get(position).getPhotoSource().equals("app/src/main/res/drawable/plant.png")){
             holder.plantPhoto.setImageResource(R.drawable.plant);
@@ -62,20 +67,8 @@ public class MyPlantAdaptor extends RecyclerView.Adapter<MyPlantAdaptor.MyViewHo
             @Override
             public void onClick(View v) {
                 Intent displayPlant = new Intent(myPlants, DisplayPlant.class);
-                displayPlant.putExtra("Name", plantList.get(position).getPlantName());
-                displayPlant.putExtra("NickName", plantList.get(position).getNickName());
-                displayPlant.putExtra("Location", plantList.get(position).getLocation());
-                displayPlant.putExtra("Date", plantList.get(position).getDateAcquired());
-                displayPlant.putExtra("Water", plantList.get(position).getNextWaterDate());
-                displayPlant.putExtra("Fertilize", plantList.get(position).getNextfertilizeDate());
-                displayPlant.putExtra("Care", plantList.get(position).getCareInstructions());
-                displayPlant.putExtra("Path", plantList.get(position).getPhotoSource());
-                displayPlant.putExtra("Plant", plantList.get(position).getId());
-                displayPlant.putExtra("TimeW", plantList.get(position).getNextWaterTimer());
-                displayPlant.putExtra("TimeF", plantList.get(position).getGetNextfertilizeTime());
-                displayPlant.putExtra("Intent", plantList.get(position).getIntent());
+                displayPlant.putExtra("Plant", plant);
                 myPlants.startActivity(displayPlant);
-
             }
         });
     }

@@ -1,10 +1,14 @@
 package com.example.thirstyplant.model;
 
-import android.icu.util.LocaleData;
+import android.icu.util.Freezable;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Plant {
+public class Plant implements Serializable {
     private int id;
     private String plantName;
     private String nickName;
@@ -18,11 +22,11 @@ public class Plant {
     private String nextfertilizeDate;
     private String getNextfertilizeTime;
     private String fertilizeFrequency;
-    private int intent;
+    private int notification_id;
     private boolean watered;
     private boolean fertilized;
 
-    public Plant(int id, String plantName, String nickName, String location, String dateAcquired, String careInstructions, String photoSource, String nextWaterDate, String nextWaterTimer, String waterFequency, String nextfertilizeDate, String getNextfertilizeTime, String fertilizeFrequency, int intent, boolean watered, boolean fertilized) {
+    public Plant(int id, String plantName, String nickName, String location, String dateAcquired, String careInstructions, String photoSource, String nextWaterDate, String nextWaterTimer, String waterFequency, String nextfertilizeDate, String getNextfertilizeTime, String fertilizeFrequency, int notification_id, boolean watered, boolean fertilized) {
         this.id = id;
         this.plantName = plantName;
         this.nickName = nickName;
@@ -36,25 +40,7 @@ public class Plant {
         this.nextfertilizeDate = nextfertilizeDate;
         this.getNextfertilizeTime = getNextfertilizeTime;
         this.fertilizeFrequency = fertilizeFrequency;
-        this.intent = intent;
-        this.watered = watered;
-        this.fertilized = fertilized;
-    }
-
-    public Plant(int id, String plantName, String nickName, String location, String dateAcquired, String careInstructions, String photoSource, String nextWaterDate, String nextWaterTimer, String waterFequency, String nextfertilizeDate, String getNextfertilizeTime, String fertilizeFrequency, boolean watered, boolean fertilized) {
-        this.id = id;
-        this.plantName = plantName;
-        this.nickName = nickName;
-        this.location = location;
-        this.dateAcquired = dateAcquired;
-        this.careInstructions = careInstructions;
-        this.photoSource = photoSource;
-        this.nextWaterDate = nextWaterDate;
-        this.nextWaterTimer = nextWaterTimer;
-        this.waterFequency = waterFequency;
-        this.nextfertilizeDate = nextfertilizeDate;
-        this.getNextfertilizeTime = getNextfertilizeTime;
-        this.fertilizeFrequency = fertilizeFrequency;
+        this.notification_id = notification_id;
         this.watered = watered;
         this.fertilized = fertilized;
     }
@@ -88,8 +74,8 @@ public class Plant {
         return nextWaterTimer;
     }
 
-    public String getWaterFequency() {
-        return waterFequency;
+    public long getWaterFequency() {
+        return Long.parseLong(waterFequency);
     }
 
     public String getNextfertilizeDate() {
@@ -102,6 +88,9 @@ public class Plant {
 
     public String getFertilizeFrequency() {
         return fertilizeFrequency;
+    }
+    public long howOftenFertilize(){
+        return Long.parseLong(getFertilizeFrequency());
     }
 
     public void setNextWaterDate(String nextWaterDate) {
@@ -128,8 +117,8 @@ public class Plant {
         this.fertilizeFrequency = fertilizeFrequency;
     }
 
-    public int getIntent() {
-        return intent;
+    public int getNotification_id() {
+        return notification_id;
     }
 
     public int getId() {
@@ -219,4 +208,30 @@ public class Plant {
             setFertilized(true);
         }
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public LocalDate convertStringToDate(String date){
+        return LocalDate.parse(date);
+    }
+
+    public String convertDatetoString(LocalDate date){
+        return date.toString();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void watered(){
+        setNextWaterDate(convertDatetoString(convertStringToDate(getNextWaterDate()).plusDays(getWaterFequency())));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void fertilized() throws Exception {
+        if (getNextfertilizeDate().equals("N/A")){
+            throw new Exception("Plant does not need to be fertilized");
+        }
+        else {
+            setNextfertilizeDate(convertDatetoString(convertStringToDate(getNextfertilizeDate()).plusDays(howOftenFertilize())));
+        }
+    }
+
+
 }

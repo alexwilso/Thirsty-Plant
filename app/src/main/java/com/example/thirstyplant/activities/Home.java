@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
-    private Button logOutButton, addPlantButton, myPlants;
+    private Button logOutButton, addPlantButton, myPlants, water, fertilize;
     FirebaseAuth firebaseAuth;
     DatabaseHelper databaseHelper;
     List<Plant> toWaterPlants;
@@ -54,7 +54,6 @@ public class Home extends AppCompatActivity {
         fertilizeView.setLayoutManager(new GridLayoutManager(Home.this, 3));
         fertilizeView.setAdapter(homeAdaptor);
 
-
         firebaseAuth = FirebaseAuth.getInstance();
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +73,6 @@ public class Home extends AppCompatActivity {
                 toMyPlants();
             }
         });
-
     }
 
     /**

@@ -7,14 +7,11 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.example.thirstyplant.model.FertilizeTimer;
 import com.example.thirstyplant.model.Plant;
-import com.example.thirstyplant.model.WaterTimer;
 
 import java.text.DateFormat;
 import java.text.ParsePosition;
@@ -23,7 +20,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.DataFormatException;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -43,6 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATE_OF_NEXT_FERTILIZE = "DATE_OF_NEXT_FERTILIZE";
     public static final String TIME_OF_NEXT_FERTILIZE = "TIME_OF_NEXT_FERTILIZE";
     public static final String FERTILIZE_FREQUENCY = "HOW_OFTEN_FERTILIZE";
+    public static final String NOTIFICATION_ID = "NOTIFICATION_ID";
 
 
     public DatabaseHelper(@Nullable Context context) {
@@ -59,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " TEXT, " + COLUMN_DATE_ACQUIRED + " TEXT, " + COLUMN_CARE_INSTRUCTIONS + " TEXT, "
                 + COLUMN_PHOTO_PATH + " TEXT, " + DATE_OF_NEXT_WATER + " TEXT, " + TIME_OF_NEXT_WATER + " TEXT, " +
                 WATER_FREQUENCY + " TEXT, " + DATE_OF_NEXT_FERTILIZE + " TEXT, " + TIME_OF_NEXT_FERTILIZE + " TEXT, " +
-                FERTILIZE_FREQUENCY + " TEXT, " + COLUMN_WATERED + " BOOL, " + COLUMN_FERTILIZED + " BOOL)";
+                FERTILIZE_FREQUENCY + " TEXT, " + NOTIFICATION_ID + " INT, " +  COLUMN_WATERED + " BOOL, " + COLUMN_FERTILIZED + " BOOL)";
         db.execSQL(plantTable);
 
     }
@@ -90,6 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(DATE_OF_NEXT_FERTILIZE, plant.getNextfertilizeDate());
         cv.put(TIME_OF_NEXT_FERTILIZE, plant.getGetNextfertilizeTime());
         cv.put(FERTILIZE_FREQUENCY, plant.getFertilizeFrequency());
+        cv.put(NOTIFICATION_ID, plant.getNotification_id());
         cv.put(COLUMN_WATERED, plant.isWatered());
         cv.put(COLUMN_FERTILIZED, plant.isFertilized());
         long insert = database.insert(PLANT_TABLE, null, cv);
@@ -121,11 +119,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String dateFertilize = cursor.getString(10);
                 String timeFertilize = cursor.getString(11);
                 String fertilizeFrequency = cursor.getString(12);
-                boolean plantWatered = cursor.getInt(13) == 1 ? true : false;
-                boolean plantFertilized = cursor.getInt(14) == 1 ? true : false;
+                int notification_id = cursor.getInt(13);
+                boolean plantWatered = cursor.getInt(14) == 1 ? true : false;
+                boolean plantFertilized = cursor.getInt(15) == 1 ? true : false;
                 Plant plant = new Plant(plantId, plantName, plantNickName, plantLocation, plantDate,
                         plantCare, photoPath, dateWater, timeWater, frequencyWater, dateFertilize,
-                        timeFertilize, fertilizeFrequency, plantWatered, plantFertilized);
+                        timeFertilize, fertilizeFrequency, notification_id, plantWatered, plantFertilized);
                 returnList.add(plant);
             } while (cursor.moveToNext());
         } else {
@@ -182,6 +181,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (int x = 0; x < plants.size();x++){
             System.out.println(plants.get(x).getPlantName());
         }
+    }
+
+    public void waterPlant(Plant plant){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(DATE_OF_NEXT_WATER, plant.getNextWaterDate());
+        database.update(PLANT_TABLE, cv, COLUMN_ID + " = " + plant.getId(), null);
+    }
+
+    public void fertilizePlant(Plant plant){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(DATE_OF_NEXT_FERTILIZE, plant.getNextfertilizeDate());
+        database.update(PLANT_TABLE, cv, COLUMN_ID + " = " + plant.getId(), null);
     }
 
 

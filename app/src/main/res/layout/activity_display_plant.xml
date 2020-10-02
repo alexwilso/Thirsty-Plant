@@ -18,6 +18,19 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/toDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="150dp"
+                android:text="Home"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.975"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.005" />
+
 
             <ImageView
                 android:id="@+id/displayPhoto"
@@ -26,21 +39,21 @@
                 android:background="#2d2d2d2d"
                 android:scaleType="centerCrop" />
 
-                <TextView
-                    android:id="@+id/displayName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/plant_name"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#9A0D0D"/>
+            <TextView
+                android:id="@+id/displayName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/plant_name"
+                android:textColor="#9A0D0D"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_margin="10dp"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -50,8 +63,8 @@
                     android:paddingEnd="10dp"
                     android:text="@string/displayNickname"
                     android:textColor="#0B5D1E"
-                    android:textStyle="bold"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/displayNickName"
@@ -64,8 +77,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_margin="10dp"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -75,8 +88,8 @@
                     android:paddingEnd="10dp"
                     android:text="@string/displayLocation"
                     android:textColor="#0B5D1E"
-                    android:textStyle="bold"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/displayLocation"
@@ -89,8 +102,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_margin="10dp"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -100,8 +113,9 @@
                     android:paddingEnd="10dp"
                     android:text="@string/displayDate"
                     android:textColor="#0B5D1E"
-                    android:textStyle="bold"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/displayDate"
                     android:layout_width="wrap_content"
@@ -113,8 +127,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_margin="10dp"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -124,8 +138,8 @@
                     android:paddingEnd="10dp"
                     android:text="@string/disaplyWater"
                     android:textColor="#0B5D1E"
-                    android:textStyle="bold"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/displayWater"
@@ -138,8 +152,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_margin="10dp"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -149,8 +163,8 @@
                     android:paddingEnd="10dp"
                     android:text="@string/displayFertilize"
                     android:textColor="#0B5D1E"
-                    android:textStyle="bold"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/displayFertilize"
@@ -163,8 +177,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_margin="10dp"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -174,8 +188,8 @@
                     android:paddingEnd="10dp"
                     android:text="Care:"
                     android:textColor="#0B5D1E"
-                    android:textStyle="bold"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/displayCare"
@@ -188,8 +202,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_margin="10dp"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
 
@@ -200,6 +214,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:background="#3F51B5"
+                    android:clickable="true"
                     android:text="Water"
                     android:textColor="#ffffff" />
 
@@ -207,21 +222,23 @@
                     android:id="@+id/fertilizePlant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:text="Fertilzie"
-                    android:textColor="#ffffff"
                     android:background="#9A0D0D"
-                    android:layout_marginEnd="10dp"/>
+                    android:clickable="true"
+                    android:text="Fertilzie"
+                    android:textColor="#ffffff" />
 
                 <Button
                     android:id="@+id/deletePlant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Delete"
-                    android:textColor="#ffffff"
                     android:layout_marginEnd="10sp"
-                    android:background="#000000"/>
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:clickable="true"
+                    android:text="Delete"
+                    android:textColor="#ffffff" />
             </LinearLayout>
 
 

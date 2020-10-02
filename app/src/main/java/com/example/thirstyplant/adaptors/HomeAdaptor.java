@@ -1,20 +1,26 @@
 package com.example.thirstyplant.adaptors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thirstyplant.R;
+import com.example.thirstyplant.activities.Home;
+import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
 
 import java.io.File;
@@ -24,39 +30,39 @@ import java.util.List;
 
 public class HomeAdaptor extends RecyclerView.Adapter<HomeAdaptor.MyViewHolder> {
 
-    private Context Home;
+    private Context home;
     private List<Plant> plantList;
     private Boolean toWater;
+    DatabaseHelper databaseHelper;
 
     public HomeAdaptor(Context home, List<Plant> plantList, Boolean toWater) {
-        Home = home;
+        this.home = home;
         this.plantList = plantList;
         this.toWater = toWater;
     }
 
-    public HomeAdaptor(Context home, List<Plant> plantList) {
-        Home = home;
-        this.plantList = plantList;
-    }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
+        databaseHelper = new DatabaseHelper(home);
+
         if (toWater){
-            LayoutInflater layoutInflater = LayoutInflater.from(Home);
+            LayoutInflater layoutInflater = LayoutInflater.from(home);
             view = layoutInflater.inflate(R.layout.activity_to_water, parent, false);
             return new MyViewHolder(view);
         } else {
-            LayoutInflater layoutInflater = LayoutInflater.from(Home);
+            LayoutInflater layoutInflater = LayoutInflater.from(home);
             view = layoutInflater.inflate(R.layout.activity_to_fertilize, parent, false);
             return new MyViewHolder(view);
         }
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.plantName.setText(plantList.get(position).getPlantName());
         if (plantList.get(position).getPhotoSource().equals("app/src/main/res/drawable/plant.png")){
             holder.plantPhoto.setImageResource(R.drawable.plant);
@@ -70,7 +76,32 @@ public class HomeAdaptor extends RecyclerView.Adapter<HomeAdaptor.MyViewHolder> 
                 e.printStackTrace();
             }
         }
-
+        if (toWater){
+            holder.toDo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    plantList.get(position).watered();
+                    databaseHelper.waterPlant(plantList.get(position));
+                    Intent toHome = new Intent(home, Home.class);
+                    home.startActivity(toHome);
+                }
+            });
+        }
+        if (!toWater){
+            holder.toDo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        plantList.get(position).fertilized();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    databaseHelper.fertilizePlant(plantList.get(position));
+                    Intent toHome = new Intent(home, Home.class);
+                    home.startActivity(toHome);
+                }
+            });
+        }
     }
 
     @Override
@@ -90,7 +121,7 @@ public class HomeAdaptor extends RecyclerView.Adapter<HomeAdaptor.MyViewHolder> 
             plantName = itemView.findViewById(R.id.toDoName);
             plantPhoto = itemView.findViewById(R.id.toDoPhoto);
             plantCard =  itemView.findViewById(R.id.toDoCard);
-            toDo = itemView.findViewById(R.id.toDoButton);
+            toDo = itemView.findViewById(R.id.ToDoWater);
         }
     }
 }

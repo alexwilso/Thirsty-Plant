@@ -1,19 +1,20 @@
 package com.example.thirstyplant.activities;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
-import android.se.omapi.Session;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.thirstyplant.R;
 import com.example.thirstyplant.Receivers.WaterReceiver;
@@ -28,8 +29,9 @@ import java.util.Objects;
 public class DisplayPlant extends AppCompatActivity {
     TextView plantName, plantNickName, plantLocation, plantDate, plantWater, plantFertilize, plantPath, plantCare;
     ImageView plantPhoto;
-    Button water, fertilize, delete;
+    Button water, fertilize, delete, home;
     DatabaseHelper databaseHelper;
+    Plant plant;
     int plantNum;
     int id;
 
@@ -37,6 +39,68 @@ public class DisplayPlant extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_plant);
+        plant = (Plant) getIntent().getSerializableExtra("Plant");
+        setViews();
+        setFields();
+        assert plant != null;
+        id = plant.getNotification_id();
+        plantNum = plant.getId();
+        databaseHelper = new DatabaseHelper(DisplayPlant.this);
+        home = findViewById(R.id.toDisplay);
+        System.out.println(plant);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deletePlant();
+            }
+        });
+        water.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                waterPlant();
+
+            }
+        });
+
+        fertilize.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                try {
+                    fertilizePlant();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(DisplayPlant.this, "Plant does not need to be fertilized", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toDisplay = new Intent(DisplayPlant.this, MyPlants.class);
+                startActivity(toDisplay);
+            }
+        });
+
+    }
+
+    public void setFields(){
+        setPhoto();
+        setName();
+        setNickname();
+        setLocation();
+        setDate();
+        setWater();
+        setFertilize();
+        setCare();
+    }
+
+    /**
+     * Sets Views based on id
+     */
+    public void setViews(){
         plantPhoto = findViewById(R.id.displayPhoto);
         plantName = findViewById(R.id.displayName);
         plantNickName = findViewById(R.id.displayNickName);
@@ -46,23 +110,8 @@ public class DisplayPlant extends AppCompatActivity {
         plantFertilize = findViewById(R.id.displayFertilize);
         plantCare = findViewById(R.id.displayCare);
         delete = findViewById(R.id.deletePlant);
-        id = getIntent().getIntExtra("Intent", 0);
-        plantNum = getIntent().getIntExtra("Plant", -2);
-        databaseHelper = new DatabaseHelper(DisplayPlant.this);
-        setPhoto();
-        setName();
-        setNickname();
-        setLocation();
-        setDate();
-        setWater();
-        setFertilize();
-        setCare();
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deletePlant();
-            }
-        });
+        water = findViewById(R.id.waterPlant);
+        fertilize = findViewById(R.id.fertilizePlant);
     }
 
 
@@ -70,10 +119,10 @@ public class DisplayPlant extends AppCompatActivity {
      * Sets photo. If user hasn't taken photo, uses plant photo from drawable
      */
     public void setPhoto() {
-        if (getIntent().getStringExtra("Path").equals("app/src/main/res/drawable/plant.png")) {
+        if (plant.getPhotoSource().equals("app/src/main/res/drawable/plant.png")) {
             plantPhoto.setImageResource(R.drawable.plant);
         } else {
-            File file = new File(Objects.requireNonNull(getIntent().getStringExtra("Path")));
+            File file = new File(Objects.requireNonNull(plant.getPhotoSource()));
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
                 plantPhoto.setImageBitmap(bitmap);
@@ -87,35 +136,38 @@ public class DisplayPlant extends AppCompatActivity {
      * Sets plant names with string passed with intent
      */
     public void setName(){
-        plantName.setText(getIntent().getStringExtra("Name"));
+        plantName.setText(plant.getPlantName());
     }
 
     /**
      * Sets plant names with string passed with intent
      */
     public void setNickname(){
-        plantNickName.setText(getIntent().getStringExtra("NickName"));
+
+        plantNickName.setText(plant.getNickName());
     }
 
     /**
      * Sets plant location with string passed with intent
      */
     public void setLocation(){
-        plantLocation.setText(getIntent().getStringExtra("Location"));
+
+        plantLocation.setText(plant.getLocation());
     }
 
     /**
      * Sets date acquired with string passed with intent
      */
     public void setDate(){
-        plantDate.setText(getIntent().getStringExtra("Date"));
+
+        plantDate.setText(plant.getDateAcquired());
     }
 
     /**
      * Sets next water date with string passed with intent
      */
     public void setWater(){
-        String time = "Date: " + getIntent().getStringExtra("Water") + " Time: " + getIntent().getStringExtra("TimeW");
+        String time = "Date: " + plant.getNextWaterDate() + " Time: " + plant.getNextWaterTimer();
         plantWater.setText(time);
     }
 
@@ -123,7 +175,7 @@ public class DisplayPlant extends AppCompatActivity {
      * Sets next fertilize date with string passed with intent
      */
     public void setFertilize(){
-        String time = "Date: " + getIntent().getStringExtra("Fertilize") + " Time: " + getIntent().getStringExtra("TimeF");
+        String time = "Date: " + plant.getNextfertilizeDate() + " Time: " + plant.getGetNextfertilizeTime();
 
         plantFertilize.setText(time);
     }
@@ -132,7 +184,7 @@ public class DisplayPlant extends AppCompatActivity {
      * Sets care instructions with string passed with intent
      */
     public void setCare(){
-        plantCare.setText(getIntent().getStringExtra("Care"));
+        plantCare.setText(plant.getCareInstructions());
     }
 
     public void deletePlant(){
@@ -151,6 +203,26 @@ public class DisplayPlant extends AppCompatActivity {
                 id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void waterPlant(){
+        plant.watered();
+        databaseHelper.waterPlant(plant);
+        reloadPlant();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void fertilizePlant() throws Exception {
+        plant.fertilized();
+        databaseHelper.fertilizePlant(plant);
+        reloadPlant();
+    }
+
+    public void reloadPlant(){
+        Intent displayPlant = new Intent(DisplayPlant.this, DisplayPlant.class);
+        displayPlant.putExtra("Plant", plant);
+        startActivity(displayPlant);
     }
 
 }

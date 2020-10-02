@@ -27,12 +27,12 @@ public class MyPlants extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_plants);
-        HomeScreen = findViewById(R.id.toHome);
+        HomeScreen = findViewById(R.id.toDisplay);
         plantDatabaseHelper = new DatabaseHelper(MyPlants.this);
         myPlantList = new ArrayList<>();
         addPlants(myPlantList);
 
-        RecyclerView myView = (RecyclerView) findViewById(R.id.recyclerPlants);
+        RecyclerView myView = findViewById(R.id.recyclerPlants);
         MyPlantAdaptor myAdaptor = new MyPlantAdaptor(MyPlants.this, myPlantList);
         myView.setLayoutManager(new GridLayoutManager(MyPlants.this, 2));
         myView.setAdapter(myAdaptor);
