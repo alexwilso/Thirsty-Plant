@@ -12,7 +12,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.thirstyplant.R;
-import com.example.thirstyplant.adaptors.HomeAdaptor;
+import com.example.thirstyplant.adaptors.FertilizeAdaptor;
+import com.example.thirstyplant.adaptors.WaterAdaptor;
 import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +43,7 @@ public class Home extends AppCompatActivity {
         toWaterPlants = new ArrayList<>();
         needWater(toWaterPlants);
         RecyclerView waterView = findViewById(R.id.ToWater);
-        HomeAdaptor waterAdaptor = new HomeAdaptor(Home.this, toWaterPlants, true);
+        WaterAdaptor waterAdaptor = new WaterAdaptor(Home.this, toWaterPlants);
         waterView.setLayoutManager(new GridLayoutManager(Home.this, 3));
         waterView.setAdapter(waterAdaptor);
 
@@ -50,9 +51,9 @@ public class Home extends AppCompatActivity {
         toFertilizePlants = new ArrayList<>();
         needFertilizer(toFertilizePlants);
         RecyclerView fertilizeView = findViewById(R.id.ToFertilize);
-        HomeAdaptor homeAdaptor = new HomeAdaptor(Home.this, toFertilizePlants, false);
+        FertilizeAdaptor fertilizeAdaptor = new FertilizeAdaptor(Home.this, toFertilizePlants);
         fertilizeView.setLayoutManager(new GridLayoutManager(Home.this, 3));
-        fertilizeView.setAdapter(homeAdaptor);
+        fertilizeView.setAdapter(fertilizeAdaptor);
 
         firebaseAuth = FirebaseAuth.getInstance();
         logOutButton.setOnClickListener(new View.OnClickListener() {

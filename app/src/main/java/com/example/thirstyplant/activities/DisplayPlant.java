@@ -167,7 +167,9 @@ public class DisplayPlant extends AppCompatActivity {
      * Sets next water date with string passed with intent
      */
     public void setWater(){
-        String time = "Date: " + plant.getNextWaterDate() + " Time: " + plant.getNextWaterTimer();
+        String time = "Date: " + plant.getNextWaterDate() +  "\n" + " Time: "
+                + plant.getNextWaterTimer() + "\n" +
+                " Every " + plant.getWaterFequency() + " days";
         plantWater.setText(time);
     }
 
@@ -175,7 +177,8 @@ public class DisplayPlant extends AppCompatActivity {
      * Sets next fertilize date with string passed with intent
      */
     public void setFertilize(){
-        String time = "Date: " + plant.getNextfertilizeDate() + " Time: " + plant.getGetNextfertilizeTime();
+        String time = "Date: " + plant.getNextfertilizeDate() + "\n" + " Time: " +
+                plant.getGetNextfertilizeTime() + "\n"+ " Every " + plant.getFertilizeFrequency() + " days";
 
         plantFertilize.setText(time);
     }

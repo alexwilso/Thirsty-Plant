@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -28,41 +27,33 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class HomeAdaptor extends RecyclerView.Adapter<HomeAdaptor.MyViewHolder> {
+public class FertilizeAdaptor extends RecyclerView.Adapter<FertilizeAdaptor.MyViewHolder>{
+
 
     private Context home;
     private List<Plant> plantList;
-    private Boolean toWater;
     DatabaseHelper databaseHelper;
 
-    public HomeAdaptor(Context home, List<Plant> plantList, Boolean toWater) {
+    public FertilizeAdaptor(Context home, List<Plant> plantList) {
         this.home = home;
         this.plantList = plantList;
-        this.toWater = toWater;
     }
 
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FertilizeAdaptor.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         databaseHelper = new DatabaseHelper(home);
 
-        if (toWater){
-            LayoutInflater layoutInflater = LayoutInflater.from(home);
-            view = layoutInflater.inflate(R.layout.activity_to_water, parent, false);
-            return new MyViewHolder(view);
-        } else {
             LayoutInflater layoutInflater = LayoutInflater.from(home);
             view = layoutInflater.inflate(R.layout.activity_to_fertilize, parent, false);
-            return new MyViewHolder(view);
-        }
-
+            return new FertilizeAdaptor.MyViewHolder(view);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull FertilizeAdaptor.MyViewHolder holder, final int position) {
         holder.plantName.setText(plantList.get(position).getPlantName());
         if (plantList.get(position).getPhotoSource().equals("app/src/main/res/drawable/plant.png")){
             holder.plantPhoto.setImageResource(R.drawable.plant);
@@ -76,32 +67,20 @@ public class HomeAdaptor extends RecyclerView.Adapter<HomeAdaptor.MyViewHolder> 
                 e.printStackTrace();
             }
         }
-        if (toWater){
-            holder.toDo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    plantList.get(position).watered();
-                    databaseHelper.waterPlant(plantList.get(position));
-                    Intent toHome = new Intent(home, Home.class);
-                    home.startActivity(toHome);
-                }
-            });
-        }
-        if (!toWater){
-            holder.toDo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        plantList.get(position).fertilized();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
+        holder.toDo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    plantList.get(position).fertilized();
                     databaseHelper.fertilizePlant(plantList.get(position));
                     Intent toHome = new Intent(home, Home.class);
                     home.startActivity(toHome);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
-        }
+            }
+        });
     }
 
     @Override
@@ -121,7 +100,7 @@ public class HomeAdaptor extends RecyclerView.Adapter<HomeAdaptor.MyViewHolder> 
             plantName = itemView.findViewById(R.id.toDoName);
             plantPhoto = itemView.findViewById(R.id.toDoPhoto);
             plantCard =  itemView.findViewById(R.id.toDoCard);
-            toDo = itemView.findViewById(R.id.ToDoWater);
+            toDo = itemView.findViewById(R.id.ToDoFertilize);
         }
     }
 }
