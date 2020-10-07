@@ -1,5 +1,6 @@
 package com.example.thirstyplant.activities;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
@@ -25,7 +26,6 @@ import com.example.thirstyplant.R;
 import com.example.thirstyplant.Receivers.WaterReceiver;
 import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
-import com.example.thirstyplant.notifications.NotificationHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +42,7 @@ public class WaterSchedule extends AppCompatActivity {
     JSONObject createPlant = new JSONObject();
     int notificationId = 100;
     int id;
+    long time;
 
 
     @Override
@@ -80,6 +81,7 @@ public class WaterSchedule extends AppCompatActivity {
         });
 
         setSchedule.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 try {
@@ -180,6 +182,7 @@ public class WaterSchedule extends AppCompatActivity {
     /**
      * Adds Plant to table
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean addPlant(JSONObject myPlant, View view) throws JSONException {
         Plant plant;
         if (!missingData()) {
@@ -194,6 +197,7 @@ public class WaterSchedule extends AppCompatActivity {
                         myPlant.getString("waterFrequency"), myPlant.getString("nextFertilizeDate"),
                         myPlant.getString("nextFertilizeTime"), myPlant.getString("fertilizeFrequency"), id,
                         false, false);
+                time = plant.timeUntilCare(plant.getNextWaterDate() + " " + plant.getNextWaterTimer());
             } catch (Exception e) {
                 plant = new Plant(-1, "Error", "Error", "Error",
                         "Error", "Error", "Error", "Eror",
@@ -215,7 +219,7 @@ public class WaterSchedule extends AppCompatActivity {
 
     /**
      * Sets time and date for alarm
-     */
+     * */
     public Calendar setTimeDate(){
         // Splits date into integers
         String[] arrOfString = waterDate.getText().toString().split("-");
@@ -260,20 +264,22 @@ public class WaterSchedule extends AppCompatActivity {
         intent.putExtra("notificationId", notificationId);
         intent.putExtra("toWater", "Name: " + createPlant.getString("Name") + " Location: " + createPlant.getString("Location"));
         // Look at flag here
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(WaterSchedule.this,
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
                 id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        Calendar alarmTime = setTimeDate();
-        long alarmStartTime = alarmTime.getTimeInMillis();
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
+        Calendar alarmTime = setTimeDate();
+        System.out.println("Tiemr will ring at " + time);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time, pendingIntent);
     }
 
     /**
      * Takes user to next fertilize activity if yes is checked and to home activity if not
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void toNext(View view) throws JSONException {
         if (yes.isChecked()){
             createPlant.put("nextWaterDate", waterDate.getText().toString());

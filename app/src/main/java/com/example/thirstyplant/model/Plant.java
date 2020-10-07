@@ -6,7 +6,13 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class Plant implements Serializable {
     private int id;
@@ -25,6 +31,7 @@ public class Plant implements Serializable {
     private int notification_id;
     private boolean watered;
     private boolean fertilized;
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     public Plant(int id, String plantName, String nickName, String location, String dateAcquired, String careInstructions, String photoSource, String nextWaterDate, String nextWaterTimer, String waterFequency, String nextfertilizeDate, String getNextfertilizeTime, String fertilizeFrequency, int notification_id, boolean watered, boolean fertilized) {
         this.id = id;
@@ -233,5 +240,35 @@ public class Plant implements Serializable {
         }
     }
 
+    /**
+     * returns long value of milliseconds between today and time of next care
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public long timeUntilCare(String date) {
+        // Changes today's date to string
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String stringToday = localDateTime.format(dateTimeFormatter);
 
+        // Sets format for dates
+        Date careDate = null;
+        Date todayDate = null;
+
+        try{
+            careDate = format.parse(date);
+            todayDate = format.parse(stringToday);
+            assert careDate != null;
+            long diff = careDate.getTime() - todayDate.getTime();
+            if (diff < 0){
+                return 300000;
+            }
+            else {
+                return diff;
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 30000;
+    }
 }

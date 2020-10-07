@@ -142,39 +142,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public List<Plant> toBeWatered(){
-        List<Plant> toBeWatered = getAllPlants();
+        List<Plant> allPlants = getAllPlants();
+        List<Plant> waterToday = new ArrayList<>();
         DateFormat f = new SimpleDateFormat("yyyy-mm-dd");
-        for (int x = 0; x < toBeWatered.size(); x++){
-            Date water = f.parse(toBeWatered.get(x).getNextWaterDate(), new ParsePosition(0));
+        for (int x = 0; x < allPlants.size(); x++){
+            Date water = f.parse(allPlants.get(x).getNextWaterDate(), new ParsePosition(0));
             Date today = f.parse(LocalDate.now().toString(), new ParsePosition(0));
-            if (!(water.compareTo(today) <= 0)){
-                toBeWatered.remove(x);
+            if (water.equals(today)){
+                waterToday.add(allPlants.get(x));
             }
         }
 
-        return toBeWatered;
+        return waterToday;
     }
 
     /**
-     * Returns all plants who are overdo to be fertilzied
+     * Returns all plants who are overdo to be fertilized
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public List<Plant> toBeFertilized(){
-        List<Plant> toBeFertilized = getAllPlants();
+        List<Plant> allPlants = getAllPlants();
+        List<Plant> fertilizeToday = new ArrayList<>();
+        int size = allPlants.size();
         DateFormat f = new SimpleDateFormat("yyyy-mm-dd");
-        for (int x = 0; x < toBeFertilized.size(); x++) {
-            if (toBeFertilized.get(x).getNextfertilizeDate().equals("N/A")) {
-                toBeFertilized.remove(x);
+        for (int x = 0; x < size; x++) {
+            if (allPlants.get(x).getNextfertilizeDate().equals("N/A")) {
+                // Do nothing 
             } else {
-                Date fertilize = f.parse(toBeFertilized.get(x).getNextfertilizeDate(), new ParsePosition(0));
+                Date fertilize = f.parse(allPlants.get(x).getNextfertilizeDate(), new ParsePosition(0));
                 Date today = f.parse(LocalDate.now().toString(), new ParsePosition(0));
                 System.out.println(fertilize.compareTo(today));
-                if (!(fertilize.compareTo(today) <= 0)) {
-                    toBeFertilized.remove(x);
+                if (fertilize.equals(today)) {
+                    fertilizeToday.add(allPlants.get(x));
                 }
             }
         }
-        return toBeFertilized;
+        return fertilizeToday;
     }
 
     public void getInfo(List<Plant> plants){
