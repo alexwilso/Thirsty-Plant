@@ -27,6 +27,7 @@ import com.example.thirstyplant.Receivers.WaterReceiver;
 import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,7 +43,6 @@ public class WaterSchedule extends AppCompatActivity {
     JSONObject createPlant = new JSONObject();
     int notificationId = 100;
     int id;
-    long time;
 
 
     @Override
@@ -197,7 +197,6 @@ public class WaterSchedule extends AppCompatActivity {
                         myPlant.getString("waterFrequency"), myPlant.getString("nextFertilizeDate"),
                         myPlant.getString("nextFertilizeTime"), myPlant.getString("fertilizeFrequency"), id,
                         false, false);
-                time = plant.timeUntilCare(plant.getNextWaterDate() + " " + plant.getNextWaterTimer());
             } catch (Exception e) {
                 plant = new Plant(-1, "Error", "Error", "Error",
                         "Error", "Error", "Error", "Eror",
@@ -271,9 +270,9 @@ public class WaterSchedule extends AppCompatActivity {
 
 
         Calendar alarmTime = setTimeDate();
-        System.out.println("Tiemr will ring at " + time);
+        long alarmStartTime = alarmTime.getTimeInMillis();
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
     }
 
     /**
@@ -285,7 +284,7 @@ public class WaterSchedule extends AppCompatActivity {
             createPlant.put("nextWaterDate", waterDate.getText().toString());
             createPlant.put("nextWaterTimer", waterTime.getText().toString());
             createPlant.put("waterFrequency", waterFrequency.getText().toString());
-            createAlarm(view);
+//            createAlarm(view);
             Intent toFertilize = new Intent(WaterSchedule.this, FertilizeSchedule.class);
             toFertilize.putExtra("createPlant", createPlant.toString());
             startActivity(toFertilize);
