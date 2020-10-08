@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        AlexWilson {
+            storePassword 'woodridge'
+            keyAlias 'Plant'
+            keyPassword 'woodridge'
+            storeFile file('/Users/alexwilson/Desktop/private_key.pepk')
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 

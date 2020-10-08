@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     tools:context=".activities.MainActivity">
 
-    <!--https://www.kissclipart.com/seedling-icon-clipart-computer-icons-seedling-clip-fxg5md/-->
+<!--    https://www.kissclipart.com/seedling-icon-clipart-computer-icons-seedling-clip-fxg5md/-->
 
     <ImageView
         android:id="@+id/imageView"
