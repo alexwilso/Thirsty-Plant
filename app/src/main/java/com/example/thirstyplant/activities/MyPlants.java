@@ -3,23 +3,19 @@ package com.example.thirstyplant.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import com.example.thirstyplant.R;
 import com.example.thirstyplant.adaptors.MyPlantAdaptor;
 import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyPlants extends AppCompatActivity {
     DatabaseHelper plantDatabaseHelper;
-//    ListView plantList;
     List<Plant> myPlantList;
     Button HomeScreen;
 
@@ -52,6 +48,10 @@ public class MyPlants extends AppCompatActivity {
         plants.addAll(plantDatabaseHelper.getAllPlants());
     }
 
+
+    /**
+     * Takes user back to home screen
+     */
     private void toHome(){
         Intent homescreen = new Intent(MyPlants.this, Home.class);
         startActivity(homescreen);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.thirstyplant">
+    package="com.example.thirstyplant" >
 
     <uses-feature
         android:name="android.hardware.Camera"
@@ -15,9 +15,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".controller.to_fertilize"></activity>
-        <activity android:name=".controller.to_do_plants" />
+        android:theme="@style/AppTheme" >
+        <activity android:name=".controller.ToFertilize" />
+        <activity android:name=".controller.ToWater" />
         <activity android:name=".activities.DisplayPlant" />
         <activity android:name=".activities.FertilizeSchedule" />
         <activity android:name=".activities.MyPlants" />
@@ -25,7 +25,7 @@
         <activity android:name=".activities.AddPlant" />
         <activity android:name=".activities.Home" />
         <activity android:name=".activities.CreateUser" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +39,6 @@
 
         <receiver android:name=".Receivers.WaterReceiver" />
         <receiver android:name=".Receivers.FertilizeReceiver" />
-
     </application>
 
 </manifest>

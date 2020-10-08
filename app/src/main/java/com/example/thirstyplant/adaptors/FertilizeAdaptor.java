@@ -11,25 +11,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.thirstyplant.R;
 import com.example.thirstyplant.activities.Home;
 import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 
 public class FertilizeAdaptor extends RecyclerView.Adapter<FertilizeAdaptor.MyViewHolder>{
-
-
     private Context home;
     private List<Plant> plantList;
     DatabaseHelper databaseHelper;

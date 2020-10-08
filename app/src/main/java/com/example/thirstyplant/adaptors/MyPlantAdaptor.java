@@ -49,7 +49,6 @@ public class MyPlantAdaptor extends RecyclerView.Adapter<MyPlantAdaptor.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        plant = plantList.get(position);
         System.out.println(plantList);
         holder.plantName.setText(plantList.get(position).getPlantName());
         if (plantList.get(position).getPhotoSource().equals("app/src/main/res/drawable/plant.png")){
@@ -68,8 +67,7 @@ public class MyPlantAdaptor extends RecyclerView.Adapter<MyPlantAdaptor.MyViewHo
             @Override
             public void onClick(View v) {
                 Intent displayPlant = new Intent(myPlants, DisplayPlant.class);
-                System.out.println(plant);
-                displayPlant.putExtra("Plant", plant);
+                displayPlant.putExtra("Plant", plantList.get(position));
                 myPlants.startActivity(displayPlant);
             }
         });

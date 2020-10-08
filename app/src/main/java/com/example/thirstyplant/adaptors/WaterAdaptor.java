@@ -11,17 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.thirstyplant.R;
 import com.example.thirstyplant.activities.Home;
 import com.example.thirstyplant.io.DatabaseHelper;
 import com.example.thirstyplant.model.Plant;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,9 +40,8 @@ public class WaterAdaptor extends RecyclerView.Adapter<WaterAdaptor.MyViewHolder
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        databaseHelper = new DatabaseHelper(home);
-
         LayoutInflater layoutInflater = LayoutInflater.from(home);
+        databaseHelper = new DatabaseHelper(home);
         view = layoutInflater.inflate(R.layout.activity_to_water, parent, false);
         return new MyViewHolder(view);
 

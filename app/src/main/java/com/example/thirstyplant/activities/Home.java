@@ -4,12 +4,14 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.thirstyplant.R;
 import com.example.thirstyplant.adaptors.FertilizeAdaptor;
@@ -27,6 +29,8 @@ public class Home extends AppCompatActivity {
     DatabaseHelper databaseHelper;
     List<Plant> toWaterPlants;
     List<Plant> toFertilizePlants;
+    TextView waterComplete;
+    TextView fertilizeComplete;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -37,11 +41,19 @@ public class Home extends AppCompatActivity {
         logOutButton = findViewById(R.id.logOutButton);
         addPlantButton = findViewById(R.id.addPlant);
         myPlants = findViewById(R.id.myPlants);
+        waterComplete = findViewById(R.id.waterComplete);
+        fertilizeComplete = findViewById(R.id.fertilizeComplete);
         databaseHelper = new DatabaseHelper(Home.this);
 
         // Sets and fills recycle view with plants to be watered
         toWaterPlants = new ArrayList<>();
         needWater(toWaterPlants);
+        if (toWaterPlants.isEmpty()){
+            waterComplete.setVisibility(View.VISIBLE);
+        }
+        else {
+            waterComplete.setVisibility(View.INVISIBLE);
+        }
         RecyclerView waterView = findViewById(R.id.ToWater);
         WaterAdaptor waterAdaptor = new WaterAdaptor(Home.this, toWaterPlants);
         waterView.setLayoutManager(new GridLayoutManager(Home.this, 3));
@@ -50,6 +62,12 @@ public class Home extends AppCompatActivity {
         // Sets and fills recycle view with plants to be fertilized
         toFertilizePlants = new ArrayList<>();
         needFertilizer(toFertilizePlants);
+        if (toFertilizePlants.isEmpty()){
+            fertilizeComplete.setVisibility(View.VISIBLE);
+        }
+        else {
+            fertilizeComplete.setVisibility(View.INVISIBLE);
+        }
         RecyclerView fertilizeView = findViewById(R.id.ToFertilize);
         FertilizeAdaptor fertilizeAdaptor = new FertilizeAdaptor(Home.this, toFertilizePlants);
         fertilizeView.setLayoutManager(new GridLayoutManager(Home.this, 3));
@@ -74,6 +92,8 @@ public class Home extends AppCompatActivity {
                 toMyPlants();
             }
         });
+        createNotificationChannelWatering();
+        createNotificationChannelFertilizing();
     }
 
     /**
@@ -99,6 +119,40 @@ public class Home extends AppCompatActivity {
         firebaseAuth.signOut();
         Intent intent = new Intent(Home.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * Creates notification channel for watering notifications
+     */
+    private void createNotificationChannelWatering() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence charSequence = "Watering Notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel("WaterAlarm", charSequence, importance);
+            channel.setDescription("Alarm for watering");
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    /**
+     * Creates notification channel for watering notifications
+     */
+    private void createNotificationChannelFertilizing() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence charSequence = "Fertilizing Notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel("FertilizeAlarm", charSequence, importance);
+            channel.setDescription("Alarm for fertilizing");
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     /**

@@ -1,16 +1,16 @@
 package com.example.thirstyplant.Receivers;
-
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
 import com.example.thirstyplant.R;
 import com.example.thirstyplant.activities.Home;
 
+/**
+ * Creates notification receiver for Fertilizing notifications
+ */
 public class FertilizeReceiver extends BroadcastReceiver {
     private static final String channelId = "FertilizeAlarm";
 
@@ -27,8 +27,8 @@ public class FertilizeReceiver extends BroadcastReceiver {
         // Sets details of notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.plant)
-                .setContentTitle(message)
-                .setContentText("Your plant needs to be fertilized")
+                .setContentTitle("Your plant needs to be fertilized")
+                .setContentText(message)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);

@@ -2,6 +2,8 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/gochi_hand</item>
+        <item>@font/montserrat</item>
+        <item>@font/oswald</item>
         <item>@font/snowburst_one</item>
     </array>
 </resources>

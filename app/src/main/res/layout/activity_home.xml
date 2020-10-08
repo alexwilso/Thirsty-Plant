@@ -103,6 +103,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.959" />
 
+    <TextView
+        android:id="@+id/waterComplete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Nothing to water today!"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/ToWater"
+        app:layout_constraintEnd_toEndOf="@+id/ToWater"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="@+id/ToWater"
+        app:layout_constraintTop_toTopOf="@+id/ToWater"
+        app:layout_constraintVertical_bias="0.504" />
+
+    <TextView
+        android:id="@+id/fertilizeComplete"
+        android:layout_width="380dp"
+        android:layout_height="80dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Nothing to fertilize today!"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ToFertilize"
+        app:layout_constraintEnd_toEndOf="@+id/ToFertilize"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/ToFertilize"
+        app:layout_constraintTop_toTopOf="@+id/ToFertilize"
+        app:layout_constraintVertical_bias="0.502"
+        tools:visibility="invisible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--https://www.clipartmax.com/max/m2i8K9K9N4N4A0G6/-->
