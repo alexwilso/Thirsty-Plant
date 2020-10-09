@@ -1,11 +1,11 @@
-package com.example.thirstyplant.Receivers;
+package com.wilson.thirstyplant.receivers;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import com.example.thirstyplant.R;
-import com.example.thirstyplant.activities.Home;
+import com.wilson.thirstyplant.R;
+import com.wilson.thirstyplant.activities.Home;
 
 /**
  * Creates notification receiver for Watering notifications

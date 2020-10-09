@@ -1,4 +1,4 @@
-package com.example.thirstyplant;
+package com.wilson.thirstyplant;
 
 import org.junit.Test;
 

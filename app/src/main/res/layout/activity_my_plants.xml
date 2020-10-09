@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.thirstyplant.activities.MyPlants">
+    tools:context="com.wilson.thirstyplant.activities.MyPlants">
 
     <Button
         android:id="@+id/toDisplay"

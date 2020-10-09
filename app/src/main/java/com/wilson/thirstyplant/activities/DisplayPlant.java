@@ -1,4 +1,4 @@
-package com.example.thirstyplant.activities;
+package com.wilson.thirstyplant.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,11 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.thirstyplant.R;
-import com.example.thirstyplant.Receivers.FertilizeReceiver;
-import com.example.thirstyplant.Receivers.WaterReceiver;
-import com.example.thirstyplant.io.DatabaseHelper;
-import com.example.thirstyplant.model.Plant;
+import com.wilson.thirstyplant.R;
+import com.wilson.thirstyplant.receivers.FertilizeReceiver;
+import com.wilson.thirstyplant.receivers.WaterReceiver;
+import com.wilson.thirstyplant.io.DatabaseHelper;
+import com.wilson.thirstyplant.model.Plant;
 
 import org.json.JSONException;
 
@@ -30,8 +30,7 @@ import java.io.FileNotFoundException;
 import java.util.Calendar;
 import java.util.Objects;
 
-import static com.example.thirstyplant.activities.FertilizeSchedule.NOTIFICATION_ID;
-import static com.example.thirstyplant.activities.FertilizeSchedule.TO_FERTILIZE;
+import static com.wilson.thirstyplant.activities.FertilizeSchedule.TO_FERTILIZE;
 
 public class DisplayPlant extends AppCompatActivity {
     TextView plantName, plantNickName, plantLocation, plantDate, plantWater, plantFertilize, plantPath, plantCare;
@@ -41,7 +40,8 @@ public class DisplayPlant extends AppCompatActivity {
     Plant plant;
     int plantNum;
     int id;
-    int notificationId = 100;
+    int notificationIdWater = 100;
+    int notificationIdFertilize = 200;
     public static final String NOTIFICATION_ID = "notificationId";
     Intent intent;
 
@@ -49,15 +49,14 @@ public class DisplayPlant extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_plant);
-        plant = (Plant) getIntent().getSerializableExtra("Plant");
         setViews();
+        plant = (Plant) getIntent().getSerializableExtra("Plant");
         setFields();
         assert plant != null;
         id = plant.getNotification_id();
         plantNum = plant.getId();
         databaseHelper = new DatabaseHelper(DisplayPlant.this);
         home = findViewById(R.id.toDisplay);
-        System.out.println(plant);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,17 +99,6 @@ public class DisplayPlant extends AppCompatActivity {
 
     }
 
-    public void setFields(){
-        setPhoto();
-        setName();
-        setNickname();
-        setLocation();
-        setDate();
-        setWater();
-        setFertilize();
-        setCare();
-    }
-
     /**
      * Sets Views based on id
      */
@@ -128,6 +116,16 @@ public class DisplayPlant extends AppCompatActivity {
         fertilize = findViewById(R.id.fertilizePlant);
     }
 
+    public void setFields(){
+        setPhoto();
+        setName();
+        setNickname();
+        setLocation();
+        setDate();
+        setWater();
+        setFertilize();
+        setCare();
+    }
 
     /**
      * Sets photo. If user hasn't taken photo, uses plant photo from drawable
@@ -208,12 +206,11 @@ public class DisplayPlant extends AppCompatActivity {
      * Deletes plant from database and cancels alarms
      */
     public void deletePlant(){
-        System.out.println(plantNum);
+        deleteWaterAlarm();
+        deleteFertilizeAlarm();
         databaseHelper.deletePlant(plantNum);
         Intent toDisplay = new Intent(DisplayPlant.this, MyPlants.class);
         startActivity(toDisplay);
-        deleteWaterAlarm();
-        deleteFertilizeAlarm();
     }
 
     /**
@@ -222,6 +219,7 @@ public class DisplayPlant extends AppCompatActivity {
     public void deleteWaterAlarm(){
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), WaterReceiver.class);
+        intent.putExtra(NOTIFICATION_ID, notificationIdWater);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
                 id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
@@ -234,6 +232,7 @@ public class DisplayPlant extends AppCompatActivity {
     public void deleteFertilizeAlarm(){
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), FertilizeReceiver.class);
+        intent.putExtra(NOTIFICATION_ID, notificationIdFertilize);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
                 id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
@@ -246,8 +245,8 @@ public class DisplayPlant extends AppCompatActivity {
     public void waterPlant() throws JSONException {
         plant.watered();
         databaseHelper.waterPlant(plant);
-        deleteWaterAlarm();
         createAlarm(true);
+        deleteWaterAlarm();
         reloadPlant();
     }
 
@@ -267,7 +266,7 @@ public class DisplayPlant extends AppCompatActivity {
      * Reloads display activity
      */
     public void reloadPlant(){
-        Intent displayPlant = new Intent(DisplayPlant.this, DisplayPlant.class);
+        Intent displayPlant = new Intent(this, DisplayPlant.class);
         displayPlant.putExtra("Plant", plant);
         startActivity(displayPlant);
     }
@@ -300,11 +299,11 @@ public class DisplayPlant extends AppCompatActivity {
     public void createAlarm(boolean watering) {
         if (watering){
             intent = new Intent(DisplayPlant.this, WaterReceiver.class);
-            intent.putExtra(NOTIFICATION_ID, notificationId);
+            intent.putExtra(NOTIFICATION_ID, notificationIdWater);
             intent.putExtra("toWater", "Name: " + plant.getPlantName() + " Location: " + plant.getLocation());}
         else {
             intent = new Intent(DisplayPlant.this, FertilizeReceiver.class);
-            intent.putExtra(NOTIFICATION_ID, notificationId);
+            intent.putExtra(NOTIFICATION_ID, notificationIdFertilize);
             intent.putExtra(TO_FERTILIZE, "Name: " + plant.getPlantName() + " Location: " + plant.getLocation());
         }
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),

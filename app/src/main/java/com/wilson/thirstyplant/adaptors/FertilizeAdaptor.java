@@ -1,4 +1,4 @@
-package com.example.thirstyplant.adaptors;
+package com.wilson.thirstyplant.adaptors;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,22 +15,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.thirstyplant.R;
-import com.example.thirstyplant.activities.Home;
-import com.example.thirstyplant.io.DatabaseHelper;
-import com.example.thirstyplant.model.Plant;
+import com.wilson.thirstyplant.R;
+import com.wilson.thirstyplant.activities.Home;
+import com.wilson.thirstyplant.io.DatabaseHelper;
+import com.wilson.thirstyplant.model.Plant;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class WaterAdaptor extends RecyclerView.Adapter<WaterAdaptor.MyViewHolder> {
-
+public class FertilizeAdaptor extends RecyclerView.Adapter<FertilizeAdaptor.MyViewHolder>{
     private Context home;
     private List<Plant> plantList;
     DatabaseHelper databaseHelper;
 
-    public WaterAdaptor(Context home, List<Plant> plantList) {
+    public FertilizeAdaptor(Context home, List<Plant> plantList) {
         this.home = home;
         this.plantList = plantList;
     }
@@ -38,19 +37,18 @@ public class WaterAdaptor extends RecyclerView.Adapter<WaterAdaptor.MyViewHolder
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FertilizeAdaptor.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        LayoutInflater layoutInflater = LayoutInflater.from(home);
         databaseHelper = new DatabaseHelper(home);
-        view = layoutInflater.inflate(R.layout.activity_to_water, parent, false);
-        return new MyViewHolder(view);
 
-
+            LayoutInflater layoutInflater = LayoutInflater.from(home);
+            view = layoutInflater.inflate(R.layout.activity_to_fertilize, parent, false);
+            return new FertilizeAdaptor.MyViewHolder(view);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull FertilizeAdaptor.MyViewHolder holder, final int position) {
         holder.plantName.setText(plantList.get(position).getPlantName());
         if (plantList.get(position).getPhotoSource().equals("app/src/main/res/drawable/plant.png")){
             holder.plantPhoto.setImageResource(R.drawable.plant);
@@ -68,13 +66,16 @@ public class WaterAdaptor extends RecyclerView.Adapter<WaterAdaptor.MyViewHolder
         holder.toDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                plantList.get(position).watered();
-                databaseHelper.waterPlant(plantList.get(position));
-                Intent toHome = new Intent(home, Home.class);
-                home.startActivity(toHome);
+                try {
+                    plantList.get(position).fertilized();
+                    databaseHelper.fertilizePlant(plantList.get(position));
+                    Intent toHome = new Intent(home, Home.class);
+                    home.startActivity(toHome);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
-//
     }
 
     @Override
@@ -94,7 +95,7 @@ public class WaterAdaptor extends RecyclerView.Adapter<WaterAdaptor.MyViewHolder
             plantName = itemView.findViewById(R.id.toDoName);
             plantPhoto = itemView.findViewById(R.id.toDoPhoto);
             plantCard =  itemView.findViewById(R.id.toDoCard);
-            toDo = itemView.findViewById(R.id.ToDoWater);
+            toDo = itemView.findViewById(R.id.ToDoFertilize);
         }
     }
 }

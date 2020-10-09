@@ -1,4 +1,4 @@
-package com.example.thirstyplant.activities;
+package com.wilson.thirstyplant.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,11 +13,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.thirstyplant.R;
-import com.example.thirstyplant.adaptors.FertilizeAdaptor;
-import com.example.thirstyplant.adaptors.WaterAdaptor;
-import com.example.thirstyplant.io.DatabaseHelper;
-import com.example.thirstyplant.model.Plant;
+import com.wilson.thirstyplant.R;
+import com.wilson.thirstyplant.adaptors.FertilizeAdaptor;
+import com.wilson.thirstyplant.adaptors.WaterAdaptor;
+import com.wilson.thirstyplant.io.DatabaseHelper;
+import com.wilson.thirstyplant.model.Plant;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;

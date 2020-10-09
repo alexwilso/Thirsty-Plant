@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.thirstyplant" >
+    package="com.wilson.thirstyplant" >
 
     <uses-feature
         android:name="android.hardware.Camera"
@@ -16,16 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".controller.ToFertilize" />
-        <activity android:name=".controller.ToWater" />
-        <activity android:name=".activities.DisplayPlant" />
-        <activity android:name=".activities.FertilizeSchedule" />
-        <activity android:name=".activities.MyPlants" />
-        <activity android:name=".activities.WaterSchedule" />
-        <activity android:name=".activities.AddPlant" />
-        <activity android:name=".activities.Home" />
-        <activity android:name=".activities.CreateUser" />
-        <activity android:name=".activities.MainActivity" >
+        <activity android:name="com.wilson.thirstyplant.controller.ToFertilize" />
+        <activity android:name="com.wilson.thirstyplant.controller.ToWater" />
+        <activity android:name="com.wilson.thirstyplant.activities.DisplayPlant" />
+        <activity android:name="com.wilson.thirstyplant.activities.FertilizeSchedule" />
+        <activity android:name="com.wilson.thirstyplant.activities.MyPlants" />
+        <activity android:name="com.wilson.thirstyplant.activities.WaterSchedule" />
+        <activity android:name="com.wilson.thirstyplant.activities.AddPlant" />
+        <activity android:name="com.wilson.thirstyplant.activities.Home" />
+        <activity android:name="com.wilson.thirstyplant.activities.CreateUser" />
+        <activity android:name="com.wilson.thirstyplant.activities.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,8 +37,8 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <receiver android:name=".Receivers.WaterReceiver" />
-        <receiver android:name=".Receivers.FertilizeReceiver" />
+        <receiver android:name="com.wilson.thirstyplant.receivers.WaterReceiver" />
+        <receiver android:name="com.wilson.thirstyplant.receivers.FertilizeReceiver" />
     </application>
 
 </manifest>

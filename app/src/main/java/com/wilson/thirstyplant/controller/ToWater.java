@@ -1,8 +1,8 @@
-package com.example.thirstyplant.controller;
+package com.wilson.thirstyplant.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.thirstyplant.R;
+import com.wilson.thirstyplant.R;
 
 public class ToWater extends AppCompatActivity {
 

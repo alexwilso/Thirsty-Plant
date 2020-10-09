@@ -1,4 +1,4 @@
-package com.example.thirstyplant.activities;
+package com.wilson.thirstyplant.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
@@ -18,10 +17,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import com.example.thirstyplant.R;
-import com.example.thirstyplant.Receivers.WaterReceiver;
-import com.example.thirstyplant.io.DatabaseHelper;
-import com.example.thirstyplant.model.Plant;
+import com.wilson.thirstyplant.R;
+import com.wilson.thirstyplant.receivers.WaterReceiver;
+import com.wilson.thirstyplant.io.DatabaseHelper;
+import com.wilson.thirstyplant.model.Plant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -240,8 +239,8 @@ public class WaterSchedule extends AppCompatActivity {
      * Creates alarm at time chosen by user
      */
     public void createAlarm(View view) throws JSONException {
-        Intent intent = new Intent(WaterSchedule.this, WaterReceiver.class);
-        intent.putExtra(NOTIFICATION_ID, id);
+        Intent intent = new Intent(getApplicationContext(), WaterReceiver.class);
+        intent.putExtra(NOTIFICATION_ID, notificationId);
         intent.putExtra(TO_WATER, "Name: " + createPlant.getString("Name") + " Location: " + createPlant.getString("Location"));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
                 id, intent, PendingIntent.FLAG_UPDATE_CURRENT);

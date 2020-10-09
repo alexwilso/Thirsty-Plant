@@ -1,4 +1,4 @@
-package com.example.thirstyplant.io;
+package com.wilson.thirstyplant.io;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.os.Build;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.example.thirstyplant.model.Plant;
+import com.wilson.thirstyplant.model.Plant;
 
 import java.text.DateFormat;
 import java.text.ParsePosition;

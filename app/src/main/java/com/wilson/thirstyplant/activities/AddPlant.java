@@ -1,4 +1,4 @@
-package com.example.thirstyplant.activities;
+package com.wilson.thirstyplant.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.thirstyplant.R;
+import com.wilson.thirstyplant.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -142,7 +142,7 @@ public class AddPlant extends AppCompatActivity {
     }
 
     /**
-     * * Adds photo to internal storage @ /data/data/com.example.thirstyplant.controller/
+     * * Adds photo to internal storage @ /data/data/com.wilson.thirstyplant.controller/
      * app_plantPhotos/pathName.jpg
      */
     private void storePhoto(Bitmap bitmap, String pathName) throws IOException {

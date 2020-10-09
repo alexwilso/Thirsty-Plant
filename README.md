@@ -1,2 +1,2 @@
-# Thirsty_Plant
+# Thirsty Plant
 Thirsty Plant App
