@@ -2,7 +2,9 @@ package com.wilson.thirstyplant.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.wilson.thirstyplant.services.NotificationService;
+
 /**
  * The MainActivity program implements an application that
  * simply displays "Hello World!" to the standard output.
@@ -51,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
                 toCreateAccount();
             }
         });
+        Intent serviceIntent = new Intent(this, NotificationService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
     }
 
 /**

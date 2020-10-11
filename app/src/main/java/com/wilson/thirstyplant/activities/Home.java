@@ -2,6 +2,7 @@ package com.wilson.thirstyplant.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.app.NotificationChannel;
@@ -19,6 +20,7 @@ import com.wilson.thirstyplant.adaptors.WaterAdaptor;
 import com.wilson.thirstyplant.io.DatabaseHelper;
 import com.wilson.thirstyplant.model.Plant;
 import com.google.firebase.auth.FirebaseAuth;
+import com.wilson.thirstyplant.services.NotificationService;
 
 import java.util.ArrayList;
 import java.util.List;

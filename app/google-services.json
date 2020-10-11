@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:774521285660:android:7810b032464a8bd28283d9",
         "android_client_info": {
-          "package_name": "com.example.thirstyplant.controller"
+          "package_name": "com.wilson.thirstyplant.controller"
         }
       },
       "oauth_client": [
