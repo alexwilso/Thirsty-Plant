@@ -1,5 +1,6 @@
 package com.wilson.thirstyplant.adaptors;
 
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
@@ -19,6 +22,8 @@ import com.wilson.thirstyplant.R;
 import com.wilson.thirstyplant.activities.Home;
 import com.wilson.thirstyplant.io.DatabaseHelper;
 import com.wilson.thirstyplant.model.Plant;
+import com.wilson.thirstyplant.notifications.WaterNotifications;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,13 +33,17 @@ public class WaterAdaptor extends RecyclerView.Adapter<WaterAdaptor.MyViewHolder
 
     private Context home;
     private List<Plant> plantList;
+    AlarmManager alarmManager;
+    Context context;
     DatabaseHelper databaseHelper;
+    WaterNotifications waterNotifications;
 
-    public WaterAdaptor(Context home, List<Plant> plantList) {
+    public WaterAdaptor(Context home, List<Plant> plantList, AlarmManager alarmManager, Context context) {
         this.home = home;
         this.plantList = plantList;
+        this.alarmManager = alarmManager;
+        this.context = context;
     }
-
 
     @NonNull
     @Override
@@ -70,6 +79,9 @@ public class WaterAdaptor extends RecyclerView.Adapter<WaterAdaptor.MyViewHolder
             public void onClick(View v) {
                 plantList.get(position).watered();
                 databaseHelper.waterPlant(plantList.get(position));
+                waterNotifications = new WaterNotifications(plantList.get(position), context, alarmManager);
+                waterNotifications.deleteAlarm();
+                waterNotifications.createAlarm();
                 Intent toHome = new Intent(home, Home.class);
                 home.startActivity(toHome);
             }

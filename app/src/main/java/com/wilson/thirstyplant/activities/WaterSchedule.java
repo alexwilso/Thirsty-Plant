@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.wilson.thirstyplant.R;
+import com.wilson.thirstyplant.notifications.WaterNotifications;
 import com.wilson.thirstyplant.receivers.WaterReceiver;
 import com.wilson.thirstyplant.io.DatabaseHelper;
 import com.wilson.thirstyplant.model.Plant;
@@ -45,6 +46,8 @@ public class WaterSchedule extends AppCompatActivity {
     JSONObject createPlant = new JSONObject();
     int notificationId = 100;
     int id;
+    WaterNotifications waterNotifications;
+    AlarmManager alarmManager;
 
 
     @Override
@@ -58,6 +61,7 @@ public class WaterSchedule extends AppCompatActivity {
         yes = findViewById(R.id.checkBoxYes);
         setSchedule = findViewById(R.id.setSchedule);
         calendar = Calendar.getInstance();
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
 
         try {
@@ -132,7 +136,7 @@ public class WaterSchedule extends AppCompatActivity {
         else if (year == now.get(curYear) && month ==
                 now.get(curMonth) && day < now.get(curDay)){
             Toast.makeText(WaterSchedule.this, IN_THE_PAST, Toast.LENGTH_SHORT).show();
-            return true; // Change this back to false
+            return false;
         }
         return true;
     }
@@ -204,6 +208,8 @@ public class WaterSchedule extends AppCompatActivity {
             DatabaseHelper databaseHelper = new DatabaseHelper(WaterSchedule.this);
             boolean success = databaseHelper.addPlant(plant);
             if (success) {
+                waterNotifications = new WaterNotifications(plant, getApplicationContext(), alarmManager);
+                System.out.println(plant.getId());
                 return true;
             }
         }
@@ -211,48 +217,6 @@ public class WaterSchedule extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-    /**
-     * Sets time and date for alarm
-     * */
-    public Calendar setTimeDate(){
-        // Splits date into integers
-        String[] arrOfString = waterDate.getText().toString().split("-");
-        int year = Integer.parseInt(arrOfString[0]);
-        int month = Integer.parseInt(arrOfString[1]);
-        int day = Integer.parseInt(arrOfString[2]);
-
-        // Splits time into integers
-        String[] timeToInt = waterTime.getText().toString().split(":");
-        int hour = Integer.parseInt(timeToInt[0]);
-        int minute = Integer.parseInt(timeToInt[1]);
-
-        // Sets calender time to time chosen by user
-        Calendar alarmTime = Calendar.getInstance();
-        alarmTime.set(year, month -1, day, hour, minute, 0);
-//
-        return alarmTime;
-    }
-
-    /**
-     * Creates alarm at time chosen by user
-     */
-    public void createAlarm(View view) throws JSONException {
-        Intent intent = new Intent(getApplicationContext(), WaterReceiver.class);
-        intent.putExtra(NOTIFICATION_ID, notificationId);
-        intent.putExtra(TO_WATER, "Name: " + createPlant.getString("Name") + " Location: " + createPlant.getString("Location"));
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-
-        Calendar alarmTime = setTimeDate();
-        long alarmStartTime = alarmTime.getTimeInMillis();
-//
-        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
-
     }
 
     /**
@@ -264,7 +228,6 @@ public class WaterSchedule extends AppCompatActivity {
             createPlant.put(NEXT_WATER_DATE, waterDate.getText().toString());
             createPlant.put(NEXT_WATER_TIMER, waterTime.getText().toString());
             createPlant.put(WATER_FREQUENCY, waterFrequency.getText().toString());
-            createAlarm(view);
             Intent toFertilize = new Intent(WaterSchedule.this, FertilizeSchedule.class);
             toFertilize.putExtra("createPlant", createPlant.toString());
             startActivity(toFertilize);
@@ -275,7 +238,8 @@ public class WaterSchedule extends AppCompatActivity {
             createPlant.put(FERTILIZE_FREQUENCY, "N/A");
             id = (int) System.currentTimeMillis();
             if (addPlant(createPlant, view)){
-                createAlarm(view);
+//                WaterNotifications(view);
+                waterNotifications.createAlarm();
                 Intent noFertilize = new Intent(WaterSchedule.this, Home.class);
                 startActivity(noFertilize);
             }

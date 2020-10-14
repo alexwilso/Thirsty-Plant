@@ -4,8 +4,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,17 +21,20 @@ import com.wilson.thirstyplant.adaptors.FertilizeAdaptor;
 import com.wilson.thirstyplant.adaptors.WaterAdaptor;
 import com.wilson.thirstyplant.io.DatabaseHelper;
 import com.wilson.thirstyplant.model.Plant;
+import com.wilson.thirstyplant.notifications.WaterNotifications;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
-    private Button settingsButton, addPlantButton, myPlants, water, fertilize;
+    private Button settingsButton, addPlantButton, myPlants;
     DatabaseHelper databaseHelper;
     List<Plant> toWaterPlants;
     List<Plant> toFertilizePlants;
     TextView waterComplete;
     TextView fertilizeComplete;
+    AlarmManager alarmManager;
+    Context context;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -42,7 +48,8 @@ public class Home extends AppCompatActivity {
         waterComplete = findViewById(R.id.waterComplete);
         fertilizeComplete = findViewById(R.id.fertilizeComplete);
         databaseHelper = new DatabaseHelper(Home.this);
-
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        context = getApplicationContext();
         // Sets and fills recycle view with plants to be watered
         toWaterPlants = new ArrayList<>();
         needWater(toWaterPlants);
@@ -53,7 +60,7 @@ public class Home extends AppCompatActivity {
             waterComplete.setVisibility(View.INVISIBLE);
         }
         RecyclerView waterView = findViewById(R.id.ToWater);
-        WaterAdaptor waterAdaptor = new WaterAdaptor(Home.this, toWaterPlants);
+        WaterAdaptor waterAdaptor = new WaterAdaptor(Home.this, toWaterPlants, alarmManager, context);
         waterView.setLayoutManager(new GridLayoutManager(Home.this, 3));
         waterView.setAdapter(waterAdaptor);
 

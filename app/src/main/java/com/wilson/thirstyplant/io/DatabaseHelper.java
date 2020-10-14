@@ -103,7 +103,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String queryString = "SELECT * FROM " + PLANT_TABLE;
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.rawQuery(queryString, null);
-        // if there are results, creates plant objects and puts them in return list
         if (cursor.moveToFirst()) {
             do {
                 int plantId = cursor.getInt(0);
@@ -134,7 +133,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
         getInfo(returnList);
         return returnList;
-
     }
 
     /**
@@ -186,6 +184,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Updates next water date in database
+     */
     public void waterPlant(Plant plant){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -193,19 +194,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.update(PLANT_TABLE, cv, COLUMN_ID + " = " + plant.getId(), null);
     }
 
+    /**
+     * Changes next fertilize date in database
+     */
+
     public void fertilizePlant(Plant plant){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(DATE_OF_NEXT_FERTILIZE, plant.getNextfertilizeDate());
         database.update(PLANT_TABLE, cv, COLUMN_ID + " = " + plant.getId(), null);
-    }
-
-
-    public long getProfilesCount() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        long count = DatabaseUtils.queryNumEntries(db, PLANT_TABLE);
-        db.close();
-        return count;
     }
 
     /**

@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.wilson.thirstyplant.R;
+import com.wilson.thirstyplant.notifications.FertilizeNotifications;
+import com.wilson.thirstyplant.notifications.WaterNotifications;
 import com.wilson.thirstyplant.receivers.FertilizeReceiver;
 import com.wilson.thirstyplant.io.DatabaseHelper;
 import com.wilson.thirstyplant.model.Plant;
@@ -39,9 +41,12 @@ public class FertilizeSchedule extends AppCompatActivity {
     private EditText fertilizeDate, fertilizeTime, fertilizeFrequency;
     Button setSchedule;
     Calendar calendar;
+    AlarmManager alarmManager;
     JSONObject createPlant = new JSONObject();
     int notificationId = 200;
     int id;
+    FertilizeNotifications fertilizeNotifications;
+    WaterNotifications waterNotifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,7 @@ public class FertilizeSchedule extends AppCompatActivity {
         fertilizeTime = findViewById(R.id.timeTextFertlize);
         fertilizeFrequency = findViewById(R.id.fertSchedule);
         setSchedule = findViewById(R.id.button2);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         calendar = Calendar.getInstance();
         try {
             createPlant = new JSONObject(Objects.requireNonNull(getIntent().getStringExtra("createPlant")));
@@ -194,51 +200,11 @@ public class FertilizeSchedule extends AppCompatActivity {
             DatabaseHelper databaseHelper = new DatabaseHelper(FertilizeSchedule.this);
             boolean success = databaseHelper.addPlant(plant);
             if (success) {
+                fertilizeNotifications = new FertilizeNotifications(plant, getApplicationContext(), alarmManager);
+                waterNotifications = new WaterNotifications(plant, getApplicationContext(), alarmManager);
                 toNext(view);
             }
         }
-    }
-
-    /**
-     * Sets time and date for alarm
-     */
-    public Calendar setTimeDate(){
-        // Splits date into integers
-        String[] arrOfString = fertilizeDate.getText().toString().split("-");
-        int year = Integer.parseInt(arrOfString[0]);
-        int month = Integer.parseInt(arrOfString[1]);
-        int day = Integer.parseInt(arrOfString[2]);
-
-        // Splits time into integers
-        String[] timeToInt = fertilizeTime.getText().toString().split(":");
-        int hour = Integer.parseInt(timeToInt[0]);
-        int minute = Integer.parseInt(timeToInt[1]);
-
-        // Sets calender time to time chosen by user
-        Calendar alarmTime = Calendar.getInstance();
-        alarmTime.set(year, month -1, day, hour, minute, 0);
-//
-        return alarmTime;
-    }
-
-
-    /**
-     * Creates alarm at time chosen by user
-     */
-    public void createAlarm(View view) throws JSONException {
-        Intent intent = new Intent(getApplicationContext(), FertilizeReceiver.class);
-        intent.putExtra(NOTIFICATION_ID, notificationId);
-        intent.putExtra(TO_FERTILIZE, "Name: " + createPlant.getString("Name") + " Location: " + createPlant.getString("Location"));
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        Calendar alarmTime = setTimeDate();
-        long alarmStartTime = alarmTime.getTimeInMillis();
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
     }
 
     /**
@@ -253,7 +219,8 @@ public class FertilizeSchedule extends AppCompatActivity {
      * Takes user to home screen
      */
     private void toNext(View view) throws JSONException {
-        createAlarm(view);
+        fertilizeNotifications.createAlarm();
+        waterNotifications.createAlarm();
         Intent toHome = new Intent(FertilizeSchedule.this, Home.class);
         startActivity(toHome);
     }
