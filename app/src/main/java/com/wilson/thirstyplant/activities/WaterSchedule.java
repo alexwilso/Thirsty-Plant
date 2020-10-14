@@ -132,7 +132,7 @@ public class WaterSchedule extends AppCompatActivity {
         else if (year == now.get(curYear) && month ==
                 now.get(curMonth) && day < now.get(curDay)){
             Toast.makeText(WaterSchedule.this, IN_THE_PAST, Toast.LENGTH_SHORT).show();
-            return false;
+            return true; // Change this back to false
         }
         return true;
     }

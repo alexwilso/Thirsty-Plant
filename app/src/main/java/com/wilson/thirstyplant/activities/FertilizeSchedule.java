@@ -102,7 +102,7 @@ public class FertilizeSchedule extends AppCompatActivity {
         else if (year == now.get(curYear) && month ==
                 now.get(curMonth) && day < now.get(curDay)){
             Toast.makeText(FertilizeSchedule.this, IN_THE_PAST, Toast.LENGTH_SHORT).show();
-            return false;
+            return true;
         }
         return true;
     }

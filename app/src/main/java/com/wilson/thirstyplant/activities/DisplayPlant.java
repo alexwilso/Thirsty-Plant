@@ -245,8 +245,8 @@ public class DisplayPlant extends AppCompatActivity {
     public void waterPlant() throws JSONException {
         plant.watered();
         databaseHelper.waterPlant(plant);
-        createAlarm(true);
         deleteWaterAlarm();
+        createAlarm(true);
         reloadPlant();
     }
 
@@ -257,8 +257,8 @@ public class DisplayPlant extends AppCompatActivity {
     public void fertilizePlant() throws Exception {
         plant.fertilized();
         databaseHelper.fertilizePlant(plant);
-        createAlarm(false);
         deleteFertilizeAlarm();
+        createAlarm(false);
         reloadPlant();
     }
 

@@ -2,7 +2,6 @@ package com.wilson.thirstyplant.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.app.NotificationChannel;
@@ -19,15 +18,12 @@ import com.wilson.thirstyplant.adaptors.FertilizeAdaptor;
 import com.wilson.thirstyplant.adaptors.WaterAdaptor;
 import com.wilson.thirstyplant.io.DatabaseHelper;
 import com.wilson.thirstyplant.model.Plant;
-import com.google.firebase.auth.FirebaseAuth;
-import com.wilson.thirstyplant.services.NotificationService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
-    private Button logOutButton, addPlantButton, myPlants, water, fertilize;
-    FirebaseAuth firebaseAuth;
+    private Button settingsButton, addPlantButton, myPlants, water, fertilize;
     DatabaseHelper databaseHelper;
     List<Plant> toWaterPlants;
     List<Plant> toFertilizePlants;
@@ -40,7 +36,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         // References to controls on layout
-        logOutButton = findViewById(R.id.logOutButton);
+        settingsButton = findViewById(R.id.settingsButton);
         addPlantButton = findViewById(R.id.addPlant);
         myPlants = findViewById(R.id.myPlants);
         waterComplete = findViewById(R.id.waterComplete);
@@ -74,12 +70,10 @@ public class Home extends AppCompatActivity {
         FertilizeAdaptor fertilizeAdaptor = new FertilizeAdaptor(Home.this, toFertilizePlants);
         fertilizeView.setLayoutManager(new GridLayoutManager(Home.this, 3));
         fertilizeView.setAdapter(fertilizeAdaptor);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        logOutButton.setOnClickListener(new View.OnClickListener() {
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logOut();
+                toSettings();
             }
         });
         addPlantButton.setOnClickListener(new View.OnClickListener() {
@@ -115,12 +109,11 @@ public class Home extends AppCompatActivity {
     }
 
     /**
-     * Uses FireBaseAuth to verify to log user in if all fields are met.
+     * Switches to settings activity
      */
-    private void logOut(){
-        firebaseAuth.signOut();
-        Intent intent = new Intent(Home.this, MainActivity.class);
-        startActivity(intent);
+    private void toSettings(){
+        Intent toSettings = new Intent(Home.this, Settings.class);
+        startActivity(toSettings);
     }
 
     /**

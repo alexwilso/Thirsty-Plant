@@ -5,17 +5,18 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.widget.Toast;
+
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import com.wilson.thirstyplant.R;
-import com.wilson.thirstyplant.activities.MainActivity;
+import com.wilson.thirstyplant.activities.Home;
+
 
 import static com.wilson.thirstyplant.services.ServiceNotification.Channel_ID;
 
 
-public class NotificationService extends Service {
+public class ForegroundService extends Service {
 
     @Override
     public void onCreate() {
@@ -25,7 +26,7 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Intent notificationIntent = new Intent(NotificationService.this, MainActivity.class);
+        Intent notificationIntent = new Intent(ForegroundService.this, Home.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
 
@@ -37,7 +38,7 @@ public class NotificationService extends Service {
                 .build();
 
         startForeground(1, notification);
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override
