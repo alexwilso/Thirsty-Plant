@@ -1,5 +1,6 @@
 package com.wilson.thirstyplant.adaptors;
 
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,6 +20,8 @@ import com.wilson.thirstyplant.R;
 import com.wilson.thirstyplant.activities.Home;
 import com.wilson.thirstyplant.io.DatabaseHelper;
 import com.wilson.thirstyplant.model.Plant;
+import com.wilson.thirstyplant.notifications.FertilizeNotifications;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,13 +30,17 @@ import java.util.List;
 public class FertilizeAdaptor extends RecyclerView.Adapter<FertilizeAdaptor.MyViewHolder>{
     private Context home;
     private List<Plant> plantList;
+    AlarmManager alarmManager;
+    Context context;
     DatabaseHelper databaseHelper;
+    FertilizeNotifications fertilizeNotifications;
 
-    public FertilizeAdaptor(Context home, List<Plant> plantList) {
+    public FertilizeAdaptor(Context home, List<Plant> plantList, AlarmManager alarmManager, Context context) {
         this.home = home;
         this.plantList = plantList;
+        this.alarmManager = alarmManager;
+        this.context = context;
     }
-
 
     @NonNull
     @Override
@@ -69,6 +76,9 @@ public class FertilizeAdaptor extends RecyclerView.Adapter<FertilizeAdaptor.MyVi
                 try {
                     plantList.get(position).fertilized();
                     databaseHelper.fertilizePlant(plantList.get(position));
+                    fertilizeNotifications = new FertilizeNotifications(plantList.get(position), context, alarmManager);
+                    fertilizeNotifications.deleteAlarm();
+                    fertilizeNotifications.createAlarm();
                     Intent toHome = new Intent(home, Home.class);
                     home.startActivity(toHome);
                 } catch (Exception e) {

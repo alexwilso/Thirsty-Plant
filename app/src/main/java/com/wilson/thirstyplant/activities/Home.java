@@ -74,7 +74,7 @@ public class Home extends AppCompatActivity {
             fertilizeComplete.setVisibility(View.INVISIBLE);
         }
         RecyclerView fertilizeView = findViewById(R.id.ToFertilize);
-        FertilizeAdaptor fertilizeAdaptor = new FertilizeAdaptor(Home.this, toFertilizePlants);
+        FertilizeAdaptor fertilizeAdaptor = new FertilizeAdaptor(Home.this, toFertilizePlants, alarmManager, context);
         fertilizeView.setLayoutManager(new GridLayoutManager(Home.this, 3));
         fertilizeView.setAdapter(fertilizeAdaptor);
         settingsButton.setOnClickListener(new View.OnClickListener() {

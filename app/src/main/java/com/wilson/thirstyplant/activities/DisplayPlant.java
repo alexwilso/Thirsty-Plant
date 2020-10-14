@@ -44,10 +44,7 @@ public class DisplayPlant extends AppCompatActivity {
     Plant plant;
     int plantNum;
     int id;
-    int notificationIdWater = 100;
-    int notificationIdFertilize = 200;
     public static final String NOTIFICATION_ID = "notificationId";
-    Intent intent;
     Context context;
     WaterNotifications waterNotifications;
     FertilizeNotifications fertilizeNotifications;
@@ -68,6 +65,7 @@ public class DisplayPlant extends AppCompatActivity {
         waterNotifications = new WaterNotifications(plant, context, alarmManager);
         fertilizeNotifications = new FertilizeNotifications(plant, context, alarmManager);
         home = findViewById(R.id.toDisplay);
+        System.out.println(plant.getPhotoSource());
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,7 +200,6 @@ public class DisplayPlant extends AppCompatActivity {
     public void setFertilize(){
         String time = "Date: " + plant.getNextfertilizeDate() + "\n" + " Time: " +
                 plant.getGetNextfertilizeTime() + "\n"+ " Every " + plant.getFertilizeFrequency() + " days";
-
         plantFertilize.setText(time);
     }
 
@@ -218,33 +215,10 @@ public class DisplayPlant extends AppCompatActivity {
      */
     public void deletePlant(){
         waterNotifications.deleteAlarm();
-        deleteFertilizeAlarm();
+        fertilizeNotifications.deleteAlarm();
         databaseHelper.deletePlant(plantNum);
         Intent toDisplay = new Intent(DisplayPlant.this, MyPlants.class);
         startActivity(toDisplay);
-    }
-
-    /**
-     * Deletes watering alarm
-     */
-    public void deleteWaterAlarm(){
-        Intent waterAlarm = new Intent(getApplicationContext(), WaterReceiver.class);
-        waterAlarm.putExtra(NOTIFICATION_ID, notificationIdWater);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                id, waterAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.cancel(pendingIntent);
-
-    }
-
-    /**
-     * Deletes fertilizing alarm
-     */
-    public void deleteFertilizeAlarm(){
-        Intent fertAlarm = new Intent(getApplicationContext(), FertilizeReceiver.class);
-        fertAlarm.putExtra(NOTIFICATION_ID, notificationIdFertilize);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                id, fertAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.cancel(pendingIntent);
     }
 
     /**
@@ -254,7 +228,7 @@ public class DisplayPlant extends AppCompatActivity {
     public void waterPlant() throws JSONException {
         plant.watered();
         databaseHelper.waterPlant(plant);
-        deleteWaterAlarm();
+        waterNotifications.deleteAlarm();
         waterNotifications.createAlarm();
         reloadPlant();
     }
@@ -266,7 +240,7 @@ public class DisplayPlant extends AppCompatActivity {
     public void fertilizePlant() throws Exception {
         plant.fertilized();
         databaseHelper.fertilizePlant(plant);
-        deleteFertilizeAlarm();
+        fertilizeNotifications.deleteAlarm();
         fertilizeNotifications.createAlarm();
         reloadPlant();
     }

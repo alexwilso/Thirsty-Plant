@@ -44,8 +44,8 @@
     <string name="yes">Yes</string>
     <string name="will_you_be_fertilizing_this_plant">Will you be fertilizing this plant?</string>
     <string name="set_schedule">Set Schedule</string>
-    <string name="filePath">/data/data/com.example.thirstyplant.controller/app_plantPhotos/</string>
-    <string name="plantPath">/data/data/com.example.thirstyplant.controller/app_plantPhotos/</string>
+    <string name="filePath">/data/data/com.wilson.thirstyplant.controller/app_plantPhotos/</string>
+    <string name="plantPath">/data/data/com.wilson.thirstyplant.controller/app_plantPhotos/</string>
     <string name="date_aquired">Date Aquired</string>
     <string name="nick_name">Nick Name</string>
     <string name="displayName">Name:</string>

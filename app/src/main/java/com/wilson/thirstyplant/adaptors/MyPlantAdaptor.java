@@ -27,7 +27,7 @@ public class MyPlantAdaptor extends RecyclerView.Adapter<MyPlantAdaptor.MyViewHo
 
     private Context myPlants;
     private List<Plant> plantList;
-    private Plant plant;
+
 
     public MyPlantAdaptor(Context myPlants, List<Plant> plantList) {
         this.myPlants = myPlants;

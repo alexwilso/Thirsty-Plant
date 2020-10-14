@@ -19,7 +19,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import com.wilson.thirstyplant.R;
 import com.wilson.thirstyplant.notifications.WaterNotifications;
-import com.wilson.thirstyplant.receivers.WaterReceiver;
 import com.wilson.thirstyplant.io.DatabaseHelper;
 import com.wilson.thirstyplant.model.Plant;
 
@@ -35,8 +34,6 @@ public class WaterSchedule extends AppCompatActivity {
     public static final String NEXT_FERTILIZE_DATE = "nextFertilizeDate";
     public static final String NEXT_FERTILIZE_TIME = "nextFertilizeTime";
     public static final String FERTILIZE_FREQUENCY = "fertilizeFrequency";
-    public static final String NOTIFICATION_ID = "notificationId";
-    public static final String TO_WATER = "toWater";
     public static final String IN_THE_PAST = "You can't water plants in the past";
     private EditText waterDate, waterTime, waterFrequency;
     private CheckBox yes;
@@ -44,7 +41,6 @@ public class WaterSchedule extends AppCompatActivity {
     Calendar calendar;
     DatabaseHelper databaseHelper = new DatabaseHelper(WaterSchedule.this);
     JSONObject createPlant = new JSONObject();
-    int notificationId = 100;
     int id;
     WaterNotifications waterNotifications;
     AlarmManager alarmManager;

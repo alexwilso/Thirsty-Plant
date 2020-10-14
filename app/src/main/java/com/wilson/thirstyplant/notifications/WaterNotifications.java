@@ -14,6 +14,7 @@ public class WaterNotifications {
 
     public static final String NOTIFICATION_ID = "notificationId";
     public static final String TO_WATER = "toWater";
+    int notificationId = 100;
     Plant plant;
     Context context;
     AlarmManager alarmManager;
@@ -51,7 +52,7 @@ public class WaterNotifications {
      */
     public void createAlarm() {
         Intent intent = new Intent(context, WaterReceiver.class);
-        intent.putExtra(NOTIFICATION_ID, plant.getNotification_id());
+        intent.putExtra(NOTIFICATION_ID, notificationId);
         intent.putExtra(TO_WATER, "Name: " + plant.getPlantName() + " Location: " + plant.getLocation());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 plant.getNotification_id(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -67,7 +68,7 @@ public class WaterNotifications {
      */
     public void deleteAlarm(){
         Intent waterAlarm = new Intent(context, WaterReceiver.class);
-        waterAlarm.putExtra(NOTIFICATION_ID, plant.getNotification_id());
+        waterAlarm.putExtra(NOTIFICATION_ID, notificationId);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 plant.getNotification_id(), waterAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);

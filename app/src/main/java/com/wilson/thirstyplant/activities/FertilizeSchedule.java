@@ -43,7 +43,6 @@ public class FertilizeSchedule extends AppCompatActivity {
     Calendar calendar;
     AlarmManager alarmManager;
     JSONObject createPlant = new JSONObject();
-    int notificationId = 200;
     int id;
     FertilizeNotifications fertilizeNotifications;
     WaterNotifications waterNotifications;
@@ -108,7 +107,7 @@ public class FertilizeSchedule extends AppCompatActivity {
         else if (year == now.get(curYear) && month ==
                 now.get(curMonth) && day < now.get(curDay)){
             Toast.makeText(FertilizeSchedule.this, IN_THE_PAST, Toast.LENGTH_SHORT).show();
-            return true;
+            return false;
         }
         return true;
     }

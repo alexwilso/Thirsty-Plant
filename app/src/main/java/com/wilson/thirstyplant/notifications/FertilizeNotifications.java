@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.wilson.thirstyplant.model.Plant;
 import com.wilson.thirstyplant.receivers.FertilizeReceiver;
+import com.wilson.thirstyplant.receivers.WaterReceiver;
 
 import org.json.JSONException;
 
@@ -33,13 +34,13 @@ public class FertilizeNotifications {
      * */
     public Calendar setTimeDate(){
         // Splits date into integers
-        String[] arrOfString = plant.getNextWaterDate().split("-");
+        String[] arrOfString = plant.getNextfertilizeDate().split("-");
         int year = Integer.parseInt(arrOfString[0]);
         int month = Integer.parseInt(arrOfString[1]);
         int day = Integer.parseInt(arrOfString[2]);
 
         // Splits time into integers
-        String[] timeToInt = plant.getNextWaterTimer().split(":");
+        String[] timeToInt = plant.getGetNextfertilizeTime().split(":");
         int hour = Integer.parseInt(timeToInt[0]);
         int minute = Integer.parseInt(timeToInt[1]);
 
@@ -55,7 +56,7 @@ public class FertilizeNotifications {
      */
     public void createAlarm() {
         Intent intent = new Intent(context, FertilizeReceiver.class);
-        intent.putExtra(NOTIFICATION_ID, plant.getNotification_id());
+        intent.putExtra(NOTIFICATION_ID, plant.getNotification_id() + notificationId);
         intent.putExtra(TO_FERTILIZE, "Name: " + plant.getPlantName() + " Location: " + plant.getLocation());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
@@ -65,5 +66,17 @@ public class FertilizeNotifications {
         long alarmStartTime = alarmTime.getTimeInMillis();
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
+    }
+
+    /**
+     * Deletes watering alarm
+     */
+    public void deleteAlarm(){
+        Intent fertAlarm = new Intent(context, FertilizeReceiver.class);
+        fertAlarm.putExtra(NOTIFICATION_ID, plant.getNotification_id() + notificationId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                plant.getNotification_id(), fertAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
+
     }
 }
