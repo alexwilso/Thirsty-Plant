@@ -1,7 +1,7 @@
 # Thirsty Plant
 
 # What does this app do? 
-This is an android application that sends users notifications when it is time to water and fertilize their plants. It also allows users to store a photo of their plants, and track how long they've had each plant and any extra care instructions. 
+This is an android application that sends users notifications when it is time to water and fertilize their plants. It also allows users to store a photo of their plants, and track how long they've owned each plant and any extra care instructions. 
 
 # Built using...
 * Firebase for user authentication - https://firebase.google.com/ 
