@@ -21,6 +21,9 @@ This is an android application that sends users notifications when it is time to
 ![Screenshot_1602710793](https://user-images.githubusercontent.com/55516282/96161506-9a543e80-0ed4-11eb-8c35-c4e34cf7499c.png)
 ![Screenshot_1602710831](https://user-images.githubusercontent.com/55516282/96161510-9b856b80-0ed4-11eb-931c-2c2a67ce38e4.png)
 ![Screenshot_1602710849](https://user-images.githubusercontent.com/55516282/96161512-9b856b80-0ed4-11eb-9b07-ffb5036484ce.png)
+![care copy](https://user-images.githubusercontent.com/55516282/96206005-2e4df680-0f25-11eb-876a-a2da81f677db.png)
+![display copy](https://user-images.githubusercontent.com/55516282/96206012-2f7f2380-0f25-11eb-95fd-530ad764cd3b.png)
+![plants copy](https://user-images.githubusercontent.com/55516282/96206017-3017ba00-0f25-11eb-8dc5-3eb24c0f8762.png)
 ![4imdnr](https://user-images.githubusercontent.com/55516282/96161579-b1932c00-0ed4-11eb-9719-ef5ffa754ce5.gif)
 
 # Download
