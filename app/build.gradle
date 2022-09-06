@@ -4,9 +4,9 @@ apply plugin: 'com.google.gms.google-services'
 android {
     signingConfigs {
         AlexWilson {
-            storePassword 'woodridge'
+            storePassword 'plants'
             keyAlias 'Plant'
-            keyPassword 'woodridge'
+            keyPassword 'plants'
             storeFile file('/Users/alexwilson/Desktop/private_key.pepk')
         }
     }
@@ -18,7 +18,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 4
-        versionName "3.1"
+        versionName "4.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
