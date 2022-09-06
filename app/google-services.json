@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "774521285660",
-    "firebase_url": "https://thirsty-plant-76837.firebaseio.com",
-    "project_id": "thirsty-plant-76837",
-    "storage_bucket": "thirsty-plant-76837.appspot.com"
+    "project_number": "636742590058",
+    "project_id": "thirsty-plant-auth",
+    "storage_bucket": "thirsty-plant-auth.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:774521285660:android:7810b032464a8bd28283d9",
+        "mobilesdk_app_id": "1:636742590058:android:881214036ef116e259f413",
         "android_client_info": {
           "package_name": "com.wilson.thirstyplant.controller"
         }
       },
       "oauth_client": [
         {
-          "client_id": "774521285660-aregolsfbirqtdoqtvd37bea27gbl6mv.apps.googleusercontent.com",
+          "client_id": "636742590058-scseq4n4g4vra8gmppev9p3g5f43s0rk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCP6xQAom4OiDUqLJagXzV19fzQ5RKeG_c"
+          "current_key": "AIzaSyCd5m0nXy2RUKLnRqsUQiOteC3U7ZdLaqg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "774521285660-aregolsfbirqtdoqtvd37bea27gbl6mv.apps.googleusercontent.com",
+              "client_id": "636742590058-scseq4n4g4vra8gmppev9p3g5f43s0rk.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
